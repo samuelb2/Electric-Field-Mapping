@@ -5,6 +5,9 @@
  */
 
 import java.awt.AWTException;
+
+import javax.swing.JComboBox;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -52,6 +55,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public ArrayList<Point> verteciesOfBeingAddedInAnimate;//Temp representation of vertecies of being added inanimate
 	public ArrayList<inanimateObject> inAnimates;
 
+	public String[] presets;
+	private JComboBox presetCB;
+	public String presetSelected;
+
 	int xdif = 0;
 	int ydif = 0;
 
@@ -95,10 +102,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	public initialDisplay(int w, int h, JFrame f, Program program) {
 		super(w, h, f, program);
-		
-		
-		
-		
+
+
+
+
 		init();
 	}
 
@@ -149,11 +156,17 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		loadFromFile = new Button (new LoadFromFile(this), loadFromFileStrings, height/9 +725, width/20, 100, 50);
 		add(loadFromFile);
 		loadFromFile.setVisible(true);
-		
+
 		String[] ballOrWallStrs = {"Type: Animate", "Type: Inanimate"};
 		typeBallOrWall = new Button (new ballOrWallCommand(this), ballOrWallStrs, height/9 +825, width/20, 100, 50);
 		add(typeBallOrWall);
 		typeBallOrWall.setVisible(true);
+
+		presets = getAllFiles();
+		presetCB = new JComboBox(presets);
+		presetCB.setBounds(height/9 +925, width/20, 100, 50);
+		add(presetCB);
+		presetCB.setVisible(true);
 
 		inAnimates = new ArrayList<inanimateObject>();
 		verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
@@ -226,7 +239,22 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		repaint();
 	}
 
+	private String[] getAllFiles() {
+		return new String[] {"HI", "BYE", "GOOD"};
+	}
+
 	public void paintComponent(Graphics g) {
+
+		presetSelected = presets[presetCB.getSelectedIndex()];
+		if(presets.length != getAllFiles().length){//More presets where saved
+			presets = getAllFiles();
+			remove(presetCB);
+			presetCB = new JComboBox(presets);
+			presetCB.setBounds(height/9 +925, width/20, 100, 50);
+			add(presetCB);
+			presetCB.setVisible(true);}
+
+		
 		while(!messages.isEmpty()){
 			messages.printMessage();
 			try {
@@ -235,10 +263,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 		g.setColor(Color.BLACK);
 		if(elasticWalls)g.setColor(Color.green);
 
@@ -287,15 +315,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						//For issues described when adding the balls through adding new ball window,
 						//when a pending ball is 'removed' from the list, it is not truly removed,
 						//rather it is set to null.
-					pendingBalls.get(i).setColor(new Color(255,153,0, 128)); //Fourth value is opacity, int between 0 and 255.
-					pendingBalls.get(i).draw(g);}
+						pendingBalls.get(i).setColor(new Color(255,153,0, 128)); //Fourth value is opacity, int between 0 and 255.
+						pendingBalls.get(i).draw(g);}
 				}
-				
+
 				for(inanimateObject j : inAnimates){
 					j.draw(g);
 				}
 			}
-			
+
 			for(Point v: verteciesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
 				g.setColor(new Color(255, 111, 0));
 				g.fillOval(v.x, v.y, 5, 5);
@@ -658,7 +686,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					Ball ball = ballarray.get(i);
 
 					electricField[x][y].add(
-					calculateElectricField(ball,  new Point (x, y)));
+							calculateElectricField(ball,  new Point (x, y)));
 				}
 			}
 		}
@@ -846,48 +874,48 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				}
 			}
 			if(ballOrWall){
-			if(addOrEditBoolean) {
-			if(spaceFree){
+				if(addOrEditBoolean) {
+					if(spaceFree){
 
-				if(hostProgram.getJFrameById("Add Ball")==null){
-					final boolean ballsWhereMoving;
+						if(hostProgram.getJFrameById("Add Ball")==null){
+							final boolean ballsWhereMoving;
 
-					if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
-					else ballsWhereMoving = false;
+							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							else ballsWhereMoving = false;
 							hostProgram.createJFrame(50, 50, "Add Ball", new Color(255,153,0), false, "Add Ball");
 
 							final int pendingBallsSize = pendingBalls.size(); //This is how many balls are already in the process of being added.
 							final JFrame addBallF = hostProgram.getJFrameById("Add Ball");
 							addBallF.addWindowListener(new java.awt.event.WindowAdapter() {
-							    @Override
-							    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-							    	if(ballsWhereMoving){
-							    		if(!ballsMoving)ballStart.simulateClick();
-							    	}
-							    	hostProgram.framesId.remove("Add Ball");
-							    	hostProgram.frames.remove(addBallF);
-							    	pendingBalls.set(pendingBallsSize, null);//Note: We don't use pendingBalls.size(),
-							    	//as that size may change, and we want it to remove the current ball --
-							    	//We want it to remove the current pending ball, once the adding new ball
-							    	//JFrame is closed.
-							    	//
-							    	//Note2: Also, there is no -1 after pendingBallsSize,
-							    	//as the ball we want to remove will only be added later,
-							    	//meaning that the current size doesn't include it yet.
-							    	//
-							    	//Note 3: Also, we do not remove from pendingBalls, rather we
-							    	//set to null, as removing would affect the size of the array
-							    	//and in turn affect the indexes of the other balls in the
-							    	//array. Affecting the other indexes of the array is bad,
-							    	//as it breaks the condition set in Note 1,
-							    	//that pendingBallsSize should be final and never change.
-							    	//Theoretically, it's a waste of storage to set to null,
-							    	//yet as we are talking about manually added balls ONLY in here
-							    	//the only storage space that is lost, is the storage required
-							    	//for storing NULL in an arraylist * the number of balls
-							    	//added manually by user (very small number compared to
-							    	//data storage which is typically available.
-							    }
+								@Override
+								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+									if(ballsWhereMoving){
+										if(!ballsMoving)ballStart.simulateClick();
+									}
+									hostProgram.framesId.remove("Add Ball");
+									hostProgram.frames.remove(addBallF);
+									pendingBalls.set(pendingBallsSize, null);//Note: We don't use pendingBalls.size(),
+									//as that size may change, and we want it to remove the current ball --
+									//We want it to remove the current pending ball, once the adding new ball
+									//JFrame is closed.
+									//
+									//Note2: Also, there is no -1 after pendingBallsSize,
+									//as the ball we want to remove will only be added later,
+									//meaning that the current size doesn't include it yet.
+									//
+									//Note 3: Also, we do not remove from pendingBalls, rather we
+									//set to null, as removing would affect the size of the array
+									//and in turn affect the indexes of the other balls in the
+									//array. Affecting the other indexes of the array is bad,
+									//as it breaks the condition set in Note 1,
+									//that pendingBallsSize should be final and never change.
+									//Theoretically, it's a waste of storage to set to null,
+									//yet as we are talking about manually added balls ONLY in here
+									//the only storage space that is lost, is the storage required
+									//for storing NULL in an arraylist * the number of balls
+									//added manually by user (very small number compared to
+									//data storage which is typically available.
+								}
 							});
 
 							Display addBallD = new addBallDisplay(addBallF.getWidth(), addBallF.getHeight(), addBallF, hostProgram, a.getX(), a.getY(), this, pendingBallsSize);
@@ -898,79 +926,79 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 
 
-				} else{hostProgram.getJFrameById("Add Ball").toFront();}
+						} else{hostProgram.getJFrameById("Add Ball").toFront();}
 
-			}
-			else //addOrEditBoolean = true, but spaceFree = false.
-				messages.addMessage("Sorry: Cannot add ball here, space is already occupied by another ball.", messages.CENTER);
-			}
-			else{//addOrEditBoolean = false.
-				if(!spaceFree){
-					if(hostProgram.getJFrameById("Edit Ball")==null){
-						final boolean ballsWhereMoving;
-
-						if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
-						else ballsWhereMoving = false;
-
-						hostProgram.createJFrame(50, 50, "Edit Ball", new Color(255,153,0), false, "Edit Ball");
-
-						final JFrame editBallF = hostProgram.getJFrameById("Edit Ball");
-						editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
-						    @Override
-						    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-						    	if(ballsWhereMoving){
-						    		if(!ballsMoving)ballStart.simulateClick();
-						    	}
-						    	hostProgram.framesId.remove("Edit Ball");
-						    	hostProgram.frames.remove(editBallF);
-						    	}});
-
-						Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this, ballarray.indexOf(ballInSpace));
-						editBallF.add(editBallD);
-						ballInSpace.setColor(Color.cyan);
-
-			} else {hostProgram.getJFrameById("Edit Ball").toFront();}
+					}
+					else //addOrEditBoolean = true, but spaceFree = false.
+						messages.addMessage("Sorry: Cannot add ball here, space is already occupied by another ball.", messages.CENTER);
 				}
+				else{//addOrEditBoolean = false.
+					if(!spaceFree){
+						if(hostProgram.getJFrameById("Edit Ball")==null){
+							final boolean ballsWhereMoving;
+
+							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							else ballsWhereMoving = false;
+
+							hostProgram.createJFrame(50, 50, "Edit Ball", new Color(255,153,0), false, "Edit Ball");
+
+							final JFrame editBallF = hostProgram.getJFrameById("Edit Ball");
+							editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
+								@Override
+								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+									if(ballsWhereMoving){
+										if(!ballsMoving)ballStart.simulateClick();
+									}
+									hostProgram.framesId.remove("Edit Ball");
+									hostProgram.frames.remove(editBallF);
+								}});
+
+							Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this, ballarray.indexOf(ballInSpace));
+							editBallF.add(editBallD);
+							ballInSpace.setColor(Color.cyan);
+
+						} else {hostProgram.getJFrameById("Edit Ball").toFront();}
+					}
+				}
+
+			}else{//ballOrWall = false;
+				if(hostProgram.getJFrameById("Add Inanimate")==null){
+					final boolean ballsWhereMoving;
+
+					if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+					else ballsWhereMoving = false;
+
+					hostProgram.createJFrame(50, 50, "Add Inanimate", new Color(255,153,0), false, "Add Inanimate");
+
+					final JFrame editBallF = hostProgram.getJFrameById("Add Inanimate");
+					editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
+						@Override
+						public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+							if(ballsWhereMoving){
+								if(!ballsMoving)ballStart.simulateClick();
+							}
+							hostProgram.framesId.remove("Add Inanimate");
+							hostProgram.frames.remove(editBallF);
+							verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
+						}});
+
+					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this);
+					editBallF.add(editBallD);
+
+					verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+
+				} else {
+					//hostProgram.getJFrameById("Edit Ball").toFront();
+					//In this case we don't bring to front, because it will always be up when we click
+					//to add more vertecies and we don't want user to keep jumping between windows.
+
+					verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+				}
+
 			}
 
-		}else{//ballOrWall = false;
-			if(hostProgram.getJFrameById("Add Inanimate")==null){
-				final boolean ballsWhereMoving;
-
-				if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
-				else ballsWhereMoving = false;
-
-				hostProgram.createJFrame(50, 50, "Add Inanimate", new Color(255,153,0), false, "Add Inanimate");
-
-				final JFrame editBallF = hostProgram.getJFrameById("Add Inanimate");
-				editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
-				    @Override
-				    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				    	if(ballsWhereMoving){
-				    		if(!ballsMoving)ballStart.simulateClick();
-				    	}
-				    	hostProgram.framesId.remove("Add Inanimate");
-				    	hostProgram.frames.remove(editBallF);
-				    	verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
-				    	}});
-
-				Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this);
-				editBallF.add(editBallD);
-				
-				verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
-
-	} else {
-		//hostProgram.getJFrameById("Edit Ball").toFront();
-		//In this case we don't bring to front, because it will always be up when we click
-		//to add more vertecies and we don't want user to keep jumping between windows.
-		
-		verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
 		}
-			
-		}
-
 	}
-}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
