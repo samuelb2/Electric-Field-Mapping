@@ -64,6 +64,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button elasticWallsButton;
 	private Button Voltage;
 	private Button addOrEdit;
+	private Button saveToFile;
+	private Button loadFromFile;
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
