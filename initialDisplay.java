@@ -63,6 +63,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button elasticWallsButton;
 	private Button Voltage;
 	private Button addOrEdit;
+	private Button saveToFile;
+	private Button loadFromFile;
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
@@ -133,6 +135,18 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		Voltage.setBounds(height/9 +525, width/20, 100, 50);
 		add(Voltage);
 		Voltage.setVisible(true);
+
+		String[] saveToFileStrings = {"Save To File"};
+		saveToFile = new Button (new SaveToFile(this), saveToFileStrings);
+		saveToFile.setBounds(height/9 +625, width/20, 100, 50);
+		add(saveToFile);
+		saveToFile.setVisible(true);
+
+		String[] loadFromFileStrings = {"Load From File"};
+		loadFromFile = new Button (new LoadFromFile(this), loadFromFileStrings);
+		loadFromFile.setBounds(height/9 +725, width/20, 100, 50);
+		add(loadFromFile);
+		loadFromFile.setVisible(true);
 
 		toAdd = new LinkedList<Ball>();
 		ballarray = new ArrayList<Ball>();

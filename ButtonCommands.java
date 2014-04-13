@@ -3,6 +3,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.*;
@@ -184,6 +185,7 @@ class updateBallCommand extends ButtonCommands{
 
 	}
 }
+
 class SaveToFile extends ButtonCommands {
 	initialDisplay newD = (initialDisplay) d;
 
@@ -197,8 +199,9 @@ class SaveToFile extends ButtonCommands {
 		System.out.print("Please input file path: ");
 		Path file = Paths.get(s.next());
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
+			out.write(String.valueOf(newD.ballarray.size()) + '\n');
 			for (Ball a : newD.ballarray) {
-				out.write(a.toString());
+				out.write(a.toString() + '\n');
 			}
 
 			out.write("ballsMoving: " + newD.ballsMoving + '\n');
@@ -228,14 +231,18 @@ class LoadFromFile extends ButtonCommands {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-				Ball a = new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), in.nextDouble(),
-						in.nextDouble(), in.nextDouble());
-				newD.ballarray.add(a);
+				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), 
+							in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
+			in.next();
 			newD.ballsMoving = in.nextBoolean();
+			in.next();
 			newD.voltageCalcing = in.nextBoolean();
+			in.next();
 			newD.drawVoltage = in.nextBoolean();
+			in.next();
 			newD.drawBalls = in.nextBoolean();
+			in.next();
 			newD.elasticWalls = in.nextBoolean();
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);

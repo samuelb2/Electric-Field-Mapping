@@ -28,7 +28,6 @@ import javax.swing.JButton;
 			try {
 				command.execute(timesClicked);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			timesClicked++;	

@@ -13,7 +13,6 @@ public class Ball {
 	public Force force = new Force();
 	Line2D.Double forceVector;
 
-
 	public Ball (initialDisplay d, double mass, double X, double Y, double dx, double dy, double charge) {
 		this.d = d;
 		mySize = Math.pow(400000*mass, 0.5)*2;
