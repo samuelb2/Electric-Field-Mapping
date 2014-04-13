@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -13,18 +14,48 @@ import javax.swing.JButton;
 		String[] strs; //Contains the strings that will be displayed on the button
 		//with every click.
 
-		Button(ButtonCommands command, String[]strs) {
+		Button(ButtonCommands command, String[]strs, int x, int y, int w, int h) {
 			super(strs[0]);
+			
+			
 			addActionListener(this);
 			this.command = command;
 			roundLength = strs.length;
 			this.strs = strs;
+			this.setBounds(x, y, w, h);
+			
+			
+			this.setFont(new Font("Arial", Font.PLAIN, 16));
+			//Make sure text fits in screen:
+			System.out.println(this.getText() +" " +this.getFontMetrics(this.getFont()).stringWidth(this.getText())+" " +this.getWidth());
+			if(this.getFontMetrics(this.getFont()).stringWidth(this.getText())>this.getWidth()*0.85){
+				System.out.println(this.getText());
+				//Get ratio between button width and string width
+				double ratio = (double) ((this.getWidth()*0.85)/this.getFontMetrics(this.getFont()).stringWidth(this.getText()));
+				//New font size:
+				int newSize = (int) (this.getFont().getSize()*ratio);
+				//Make sure font is not too high:
+				newSize = Math.min(newSize, this.getHeight());
 
+				System.out.println(this.getText() + " " + newSize);
+				this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), newSize));
+			}
 
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
 			this.setText(strs[(timesClicked+1)%roundLength]);
+			this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), 16));
+			//Make sure text fits in screen:
+			if(this.getFontMetrics(this.getFont()).stringWidth(this.getText())>this.getWidth()*0.9){
+				//Get ratio between button width and string width
+				int ratio = this.getWidth()/this.getFontMetrics(this.getFont()).stringWidth(this.getText());
+				//New font size:
+				int newSize = this.getFont().getSize()*ratio;
+				//Make sure font is not too high:
+				newSize = Math.min(newSize, this.getHeight());
+				this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), newSize));
+			}
 			try {
 				command.execute(timesClicked);
 			} catch (IOException e) {
@@ -36,4 +67,6 @@ import javax.swing.JButton;
 		public void simulateClick(){
 			actionPerformed(new ActionEvent(this, 0, ""));
 		}
+		
+		
 	}

@@ -196,7 +196,7 @@ class SaveToFile extends ButtonCommands {
 	void execute(int caseNum) throws IOException {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
-		Path file = Paths.get("Save Data/" + s.next());
+		Path file = Paths.get("/src/Save Data/" + s.next());
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
 			out.write(String.valueOf(newD.ballarray.size()) + '\n');
 			for (Ball a : newD.ballarray) {
@@ -210,6 +210,7 @@ class SaveToFile extends ButtonCommands {
 			out.write("elasticWalls: " + newD.elasticWalls + '\n');
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
+			newD.messages.addMessage("File not found.", onScreenMessage.CENTER);
 		}
 	}
 }
@@ -225,7 +226,7 @@ class LoadFromFile extends ButtonCommands {
 	void execute(int caseNum) throws IOException {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
-		Path file = Paths.get("Save Data/" + s.next());
+		Path file = Paths.get("/src/Save Data/" + s.next());
 		try (Scanner in = new Scanner(file);) {
 			int n = in.nextInt();
 			newD.ballarray.clear();
@@ -245,6 +246,7 @@ class LoadFromFile extends ButtonCommands {
 			newD.elasticWalls = in.nextBoolean();
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
+			newD.messages.addMessage("File not found.", onScreenMessage.CENTER);
 		}
 	}
 }

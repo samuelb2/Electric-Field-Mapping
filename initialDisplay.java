@@ -107,44 +107,37 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		paintloop = true;
 
 		String[] startStrs = {"Start", "Pause"};
-		ballStart = new Button( new pauseBallMovement(this), startStrs);
-		ballStart.setBounds(height/9 +75, width/20, 100, 50);
+		ballStart = new Button( new pauseBallMovement(this), startStrs, height/9 +75, width/20, 100, 50);
 		add(ballStart);
 		ballStart.setVisible(true);
 
 		String[] resetStrs = {"Reset"};
-		reset = new Button (new Reset(this), resetStrs);
-		reset.setBounds(height/9 +225, width/20, 100, 50);
+		reset = new Button (new Reset(this), resetStrs, height/9 +225, width/20, 100, 50);
 		add(reset);
 		reset.setVisible(true);
 
 		String[] elasticWallsArray = {"Elastic: On", "Elastic: Off"};
-		elasticWallsButton = new Button(new toogleElasticWalls(this), elasticWallsArray);
-		elasticWallsButton.setBounds(height/9 +325, width/20, 100, 50);
+		elasticWallsButton = new Button(new toogleElasticWalls(this), elasticWallsArray,height/9 +325, width/20, 100, 50);
 		add(elasticWallsButton);
 		elasticWallsButton.setVisible(true);
 
 		String[] voltageOnOff = {"Voltage: Off", "Voltage: On"};
-		Voltage = new Button (new VoltageOnOff(this), voltageOnOff);
-		Voltage.setBounds(height/9 +425, width/20, 100, 50);
+		Voltage = new Button (new VoltageOnOff(this), voltageOnOff,height/9 +425, width/20, 100, 50);
 		add(Voltage);
 		Voltage.setVisible(true);
 
 		String[] addOrEditStrings = {"OnClick: Add", "OnClick: Edit"};
-		Voltage = new Button (new addOrEditCommand(this), addOrEditStrings);
-		Voltage.setBounds(height/9 +525, width/20, 100, 50);
+		Voltage = new Button (new addOrEditCommand(this), addOrEditStrings,height/9 +525, width/20, 100, 50);
 		add(Voltage);
 		Voltage.setVisible(true);
 
 		String[] saveToFileStrings = {"Save To File"};
-		saveToFile = new Button (new SaveToFile(this), saveToFileStrings);
-		saveToFile.setBounds(height/9 +625, width/20, 100, 50);
+		saveToFile = new Button (new SaveToFile(this), saveToFileStrings,height/9 +625, width/20, 100, 50);
 		add(saveToFile);
 		saveToFile.setVisible(true);
 
 		String[] loadFromFileStrings = {"Load From File"};
-		loadFromFile = new Button (new LoadFromFile(this), loadFromFileStrings);
-		loadFromFile.setBounds(height/9 +725, width/20, 100, 50);
+		loadFromFile = new Button (new LoadFromFile(this), loadFromFileStrings, height/9 +725, width/20, 100, 50);
 		add(loadFromFile);
 		loadFromFile.setVisible(true);
 

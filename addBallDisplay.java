@@ -24,8 +24,7 @@ public class addBallDisplay extends Display {
 	void init() {
 
 		String[] startStrs = {"Add New Ball"};
-		Button ballAdd = new Button( new addBallCommand(hostFrame,this.initialDisplay, 0.00010, ballX, ballY, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000), pendingBallArraySizeBeforeAddingOurBall), startStrs);
-		ballAdd.setBounds(width/2-50, height*7/9, 100, 50);
+		Button ballAdd = new Button( new addBallCommand(hostFrame,this.initialDisplay, 0.00010, ballX, ballY, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000), pendingBallArraySizeBeforeAddingOurBall), startStrs,width/2-50, height*7/9, 100, 50);
 		add(ballAdd);
 		ballAdd.setVisible(true);
 	}

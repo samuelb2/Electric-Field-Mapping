@@ -20,8 +20,7 @@ public class editBallDisplay extends Display{
 	@Override
 	void init() {
 		String[] startStrs = {"Update Ball"};
-		Button ballEdit = new Button( new updateBallCommand(hostFrame, d, ball, ballIndex ), startStrs);
-		ballEdit.setBounds(width/2-50, height*7/9, 100, 50);
+		Button ballEdit = new Button( new updateBallCommand(hostFrame, d, ball, ballIndex ), startStrs,width/2-50, height*7/9, 100, 50);
 		add(ballEdit);
 		ballEdit.setVisible(true);
 
