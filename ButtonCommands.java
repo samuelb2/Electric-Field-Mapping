@@ -195,8 +195,8 @@ class SaveToFile extends ButtonCommands {
 	@Override
 	void execute(int caseNum) throws IOException {
 		Scanner s = new Scanner(System.in);
-		System.out.print("Please input file path: ");
-		Path file = Paths.get(s.next());
+		System.out.print("Please input file name: ");
+		Path file = Paths.get("Save Data/" + s.next());
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
 			out.write(String.valueOf(newD.ballarray.size()) + '\n');
 			for (Ball a : newD.ballarray) {
@@ -224,8 +224,8 @@ class LoadFromFile extends ButtonCommands {
 	@Override
 	void execute(int caseNum) throws IOException {
 		Scanner s = new Scanner(System.in);
-		System.out.print("Please input file path: ");
-		Path file = Paths.get(s.next());
+		System.out.print("Please input file name: ");
+		Path file = Paths.get("Save Data/" + s.next());
 		try (Scanner in = new Scanner(file);) {
 			int n = in.nextInt();
 			newD.ballarray.clear();
