@@ -5,7 +5,6 @@
  * 
  */
 
-
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -38,11 +37,7 @@ import javax.swing.text.PlainDocument;
 
 public class initialDisplay extends Display implements MouseListener, MouseMotionListener {
 
-
 	public onScreenMessage messages;
-	
-	
-	
 	public final double k = 8.987551787368176*Math.pow(10, 9);
 	public final double permitivity_of_free_space = 8.85418782 * Math.pow(10, -12);
 
@@ -56,24 +51,29 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public ArrayList<Ball> pendingBalls;//Used to display where you are adding a ball 
 	//Balls are in here only while they are being created using creation window.
 	
-	
 	int xdif = 0;
 	int ydif = 0;
-
 
 	double volume;
 	double lastvolume;
 	ArrayList<Double> originalX = new ArrayList<Double>();
 	ArrayList<Double> originalY = new ArrayList<Double>();
 
-
 	private Button ballStart;
 	private Button reset;
 	private Button elasticWallsButton;
 	private Button Voltage;
 	private Button addOrEdit;
-
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	private Button saveToFile;
+	private Button loadFromFile;
+>>>>>>> FETCH_HEAD
+=======
+	private Button saveToFile;
+	private Button loadFromFile;
+>>>>>>> FETCH_HEAD
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
@@ -104,10 +104,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	public void init() {
-		
 		messages = new onScreenMessage(hostProgram);
-
-		
 		this.voltageBarX = (int)(width/1.18);
 		this.voltageBarY = height/6 + height/100;
 		this.electricField = new Force[width][height];
@@ -171,16 +168,22 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		voltageBarMin.setBounds(voltageBarX + 55, voltageBarY + voltageBarLength-50, 50, 75);
 		add(voltageBarMin);
 
-
 		for (int i = 0; i<3; i++) {
 			for (int j = 0; j<2; j++) {
-
 				ballarray.add(new Ball(this,0.00015, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
+<<<<<<< HEAD
+<<<<<<< HEAD
+			
+=======
+				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
+>>>>>>> FETCH_HEAD
+=======
+				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
+>>>>>>> FETCH_HEAD
 				originalX.add(ballarray.get(ballarray.size()-1).x);
 				originalY.add(ballarray.get(ballarray.size()-1).y);
 
 				JLabel temp = new JLabel();
-
 
 				String str = "";
 				str+=(int)(ballarray.get(ballarray.size()-1).charge*1000000);
@@ -190,14 +193,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				chargeDisplay.add(temp);
 				add(chargeDisplay.get(chargeDisplay.size()-1));
 				temp.setVisible(true);
-
-
 			}
-
 		}
 
-
 		ballarray.add(new Ball(this,0.000075, width/2-135+0*30, height/6+65+5*30, 0, 0, -Math.max(Math.random()*100/1000000, 35/1000000)));
+		ballarray.add(new Ball(this,10, width/2-135+0*30, height/6+65+5*30, 0, 0, -Math.max(Math.random()*100/1000000, 35/1000000)));
 
 		originalX.add(ballarray.get(ballarray.size()-1).x);
 		originalY.add(ballarray.get(ballarray.size()-1).y);
@@ -212,7 +212,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		add(chargeDisplay.get(chargeDisplay.size()-1));
 		temp.setVisible(true);
 
-
 		//For Buttons:
 		ballsMoving = false;
 		voltageCalcing = false;
@@ -224,11 +223,9 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		addOrEditBoolean = true;
 
 		repaint();
-
 	}
 
 	public void paintComponent(Graphics g) {
-
 		while(!messages.isEmpty()){
 			messages.printMessage();
 			try {
@@ -251,10 +248,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 		//ballStart.repaint();
 
-
-
-
-
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,  RenderingHints.VALUE_ANTIALIAS_ON);
 		if (paintloop) {
 			try {
@@ -264,43 +257,38 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				e.printStackTrace();
 			}
 
-			if(toAdd!=null&&!toAdd.isEmpty()){
+			if(toAdd!=null&&!toAdd.isEmpty()) {
 				addBallsFromQueue();
 			}
 			if(ballsMoving) {
 				ballMovement(g);
 			}
-			if(voltageCalcing){
+			if(voltageCalcing) {
 				calcVoltage();
 			}
-			if(drawVoltage){
+			if(drawVoltage) {
 				drawVoltageGrid(g);
 				drawVoltageScale(g);
 			}
-			if(drawBalls){
-				for(int i = 0; i <ballarray.size(); i++){
+			if(drawBalls) {
+				for(int i = 0; i <ballarray.size(); i++) {
 					ballarray.get(i).draw(g);
 				}
 				for(int i = 0; i<chargeDisplay.size(); i++) {
 
 					updateJLabel(chargeDisplay.get(i), i);
 				}
-				for(int i = 0; i < pendingBalls.size(); i++){
-					if(pendingBalls.get(i)!=null){//There may be nulls in pendingBalls.
+				for(int i = 0; i < pendingBalls.size(); i++) {
+					if(pendingBalls.get(i) != null) {//There may be nulls in pendingBalls.
 						//For issues described when adding the balls through adding new ball window,
 						//when a pending ball is 'removed' from the list, it is not truly removed,
 						//rather it is set to null.
 					pendingBalls.get(i).setColor(new Color(255,153,0, 128)); //Fourth value is opacity, int between 0 and 255.
 					pendingBalls.get(i).draw(g);}
 				}
-
-
 			}
 			repaint();
 		}
-
-
-
 		repaint();
 	}
 
@@ -313,12 +301,12 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		//is in the queue.
 		Ball waiting = toAdd.peek();
 		boolean spaceFree = true;
-		for(Ball b : ballarray){
+		for(Ball b : ballarray) {
 			if(waiting.getX()>=b.x-b.getRadius()&&waiting.getX()<=b.x+b.getRadius()
 					&&waiting.getY()>=b.y-b.getRadius()&&waiting.getY()<=b.y+b.getRadius()
 					)spaceFree=false;
 		}
-		if(!spaceFree){
+		if(!spaceFree) {
 			/*
 			 * This is activated if the ball in the top of toAdd cannot be added during this method call.
 			 * If so, then the ball is removed and added at the end of the queue. 
@@ -331,19 +319,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			Ball b = toAdd.poll();
 			toAdd.add(b);
 			numBallsToDoInNextCall++;
-
 		}
-		while(toAdd.size()>numBallsToDoInNextCall){
+		while(toAdd.size()>numBallsToDoInNextCall) {
 			Ball b = toAdd.poll();
 			ballarray.add(b);
 			originalX.add(ballarray.get(ballarray.size()-1).x);
 			originalY.add(ballarray.get(ballarray.size()-1).y);
-			
-			
-			
+
 			//Code also adds a label to display the charge on the particle.
 			JLabel temp = new JLabel();
-
 
 			String str = "";
 			str+=(int)(ballarray.get(ballarray.size()-1).charge*1000000);
@@ -354,9 +338,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			add(chargeDisplay.get(chargeDisplay.size()-1));
 			temp.setVisible(true);
 			repaint();
-			
 		}
-		
 	}
 
 	public void togglePaintLoop() {
@@ -365,13 +347,9 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	public void ballMovement(Graphics g) {
 
-		for(int k = 0; k <ballarray.size(); k++){
-
-
+		for(int k = 0; k <ballarray.size(); k++) {
 			Ball temp = ballarray.get(k);
 			temp.force = new Force();
-
-
 
 			for(int j = 0; j <ballarray.size(); j++){
 				if(k!=j){
@@ -393,9 +371,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					ballarray.get(i).y+=ydif;
 				}
 			}
-
-
-
 		}
 		/*
 		if (xdif!= 0 || ydif!=0) {
@@ -403,10 +378,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				ballarray.get(i).getSpeed()*=Math.sqrt(lastvolume/volume);
 			}
 		}*/
-
-
-
-
 	}
 
 	public void calcVoltage(){
@@ -414,7 +385,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			//calculateElectricFieldOnScreen();
 			calculateVolateOnScreen();
 			//printVoltages();
-
 		}
 
 		/*
@@ -428,22 +398,21 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	private void printSigmaKineticEnergyAndElectric() {
 		double totE = 0;
-		for(Ball b : ballarray){
+		for(Ball b : ballarray) {
 			totE+=Math.pow(b.getSpeed() , 2)*b.mass*0.5;
 		}
 
-		for(int k = 0; k <ballarray.size(); k++){
-
-
+		for(int k = 0; k <ballarray.size(); k++) {
 			Ball temp = ballarray.get(k);
 
-			for(int j = 0; j <ballarray.size(); j++){
+			for(int j = 0; j <ballarray.size(); j++) {
 				if(k!=j){
 					Ball temp2 = ballarray.get(j);
 
 					totE+=(CalculatePotentialEnergy(ballarray.get(j), ballarray.get(k)));
-
-				}}}
+				}
+			}
+		}
 		//System.out.println(totE);
 
 	}
@@ -461,14 +430,14 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		try{
 			Double n = list.get(list.size()-1);
 			int numZerosToAdd = 0;
-			if(n>=999){
+			if(n >= 999) {
 				while(n>=10){
 					n/=10;
 					numZerosToAdd++;
 				}
 			}
-			else if(n<.1){
-				while(n<1){
+			else if(n<.1) {
+				while(n<1) {
 					n*=10;
 					numZerosToAdd--;
 				}
@@ -481,14 +450,12 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				sb.append(numZerosToAdd);
 			}
 
-
 		}
-		catch(IndexOutOfBoundsException e){
+		catch(IndexOutOfBoundsException e) {
 
 		}
 
 		voltageBarMax.setText(sb.toString());
-
 
 		sb = new StringBuilder();
 		sb.append("<html> Min: ");
@@ -497,16 +464,16 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			Double n = list.get(0);
 
 			int numZerosToAdd = 0;
-			if(Math.abs(n)>=999){
-				while(Math.abs(n)>=10){
+			if(Math.abs(n) >= 999) {
+				while(Math.abs(n) >= 10) {
 					n/=10;
 					numZerosToAdd++;
 
 				}
 			}
-			else if(Math.abs(n)<.1){
-				while(Math.abs(n)<10){
-					n*=10;
+			else if(Math.abs(n) < .1) {
+				while(Math.abs(n) < 10) {
+					n *= 10;
 					numZerosToAdd--;
 
 
@@ -514,7 +481,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			}
 			sb.append(n.toString().substring(0, 5));
 
-			if(numZerosToAdd!=0){
+			if(numZerosToAdd != 0) {
 				sb.append("<br>");		
 				sb.append("E ");
 				sb.append(numZerosToAdd);
@@ -522,7 +489,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 
 		}
-		catch(IndexOutOfBoundsException e){
+		catch(IndexOutOfBoundsException e) {
 
 		}
 
@@ -531,15 +498,14 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	private void printVoltages() {
-		for(int x = 0; x <width; x++){
-			for (int y = 0; y < height; y++){
+		for(int x = 0; x <width; x++) {
+			for (int y = 0; y < height; y++) {
 				double v = voltageValue[x][y];
-				if (v!=0){
+				if (v != 0) {
 					//	System.out.println("X: " + x + " Y: " + y + " V: " + v);
 				}
 			}
 		}
-
 	}
 
 	private void drawVoltageGrid(Graphics g) {
@@ -549,21 +515,17 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		double exactlyZero  = getZeroAmount(list);
 		double aboveZero = getPositiveAmount(list);
 
-
-
-		for(int x = width/6 +5; x < width*5/6 -10; x+=pixel){
-			for (int y = height/6+5; y <height*5/6 + height/10 -30; y+=pixel){
+		for(int x = width/6 +5; x < width*5/6 -10; x+=pixel) {
+			for (int y = height/6+5; y <height*5/6 + height/10 -30; y+=pixel) {
 				double value = voltageValue[x][y];
 				g.setColor(Color.black);
 				int colorVal = 128;
 				boolean hot = false;
 
-
-				if(value<0){
+				if(value < 0) {
 					colorVal = (int)((belowZero - list.indexOf(value))/belowZero*128);
 					colorVal = Math.min(colorVal, 128);
 					hot = false;
-
 
 				}else if(value>0){
 					colorVal = (int)((list.indexOf(value)-belowZero+2)/aboveZero*128);
@@ -587,12 +549,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	}
 
-
-
 	private int getZeroAmount(ArrayList<Double> list) {
 		int counter = 0;
-		for(int i = 0; i < list.size(); i++){
-			if(list.get(i)==0){
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i) == 0) {
 				counter++;
 			}
 		}
@@ -602,7 +562,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private int getPositiveAmount(ArrayList<Double> list) {
 		int counter = 0;
 		for(int i = 0; i < list.size(); i++){
-			if(list.get(i)>0){
+			if(list.get(i) > 0) {
 				counter++;
 			}
 		}
@@ -611,8 +571,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	private int getNegativeAmount(ArrayList<Double> list) {
 		int counter = 0;
-		for(int i = 0; i < list.size(); i++){
-			if(list.get(i)<0){
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i) < 0){
 				counter++;
 			}
 		}
@@ -621,9 +581,9 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	private ArrayList<Double> makeList(double[][] a) {
 		ArrayList<Double> retval = new ArrayList<Double>();
-		for(int i = 0; i < a.length; i++){
-			for (int j = 0; j < a[i].length; j++){
-				if(a[i][j]!=0){
+		for(int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[i].length; j++) {
+				if(a[i][j]!=0) {
 					retval.add(a[i][j]);
 				}
 			}
@@ -633,33 +593,32 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 
-	private void drawVoltageScale(Graphics g){
+	private void drawVoltageScale(Graphics g) {
 		int x = voltageBarX;
 		int y = voltageBarY;
 		int width = voltageBarWidth;
 		int height = 1;
 		double length = voltageBarLength/2;
 		//For hot:
-		for(double i = length; i >=0; i--){
+		for(double i = length; i >=0; i--) {
 			int colorVal = (int) (i/length*128);
 			g.setColor(new Color(colorVal+127, 0, 128-colorVal));
 			colorVal = Math.min(colorVal, 128);
 			g.fillRect(x, (int) (y+length-i), width, height);
 		}
-		for(double i = 1; i <=length; i++){
+		for(double i = 1; i <=length; i++) {
 			int colorVal = (int) (i/length*128);
 			g.setColor(new Color(128-colorVal, 0, colorVal+127));
 			colorVal = Math.min(colorVal, 128);
 			g.fillRect(x, (int) (y+length+i), width, height);
 		}
 
-
 	}
 
 
 	private void calculateVolateOnScreen() {
-		for(int x = width/6 +5; x < width*5/6-10; x+=pixel){
-			for (int y = height/6 +5; y <height*5/6 + height/10-30; y+=pixel){
+		for(int x = width/6 +5; x < width*5/6-10; x+=pixel) {
+			for (int y = height/6+5; y <height*5/6 + height/10-30; y+=pixel) {
 				voltageValue[x][y] = 0;
 				for(int i = 0; i <ballarray.size(); i++){
 					Ball ball = ballarray.get(i);
@@ -672,27 +631,24 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	private double calculateVoltage(Ball ball, Point point) {
 		return ball.charge/distance(ball.x, ball.y, point.x, point.y)/(4*Math.PI*permitivity_of_free_space);
-
 	}
 
 	private double distance(double x, double y, double x2, double y2) {
 		return Math.pow(Math.pow(x - x2, 2) + Math.pow(y - y2, 2), 0.5);
-
 	}
 
 	private void calculateElectricFieldOnScreen() {
-		for(int x = width/6+5; x < width*5/6-10; x+=pixel){
-			for (int y = height/6+5; y <height*5/6 + height/10-30; y+=pixel){
+		for(int x = width/6+5; x < width*5/6-10; x+=pixel) {
+			for (int y = height/6+5; y <height*5/6 + height/10-30; y+=pixel) {
 				electricField[x][y] = new Force();
-				for(int i = 0; i <ballarray.size(); i++){
+				for(int i = 0; i <ballarray.size(); i++) {
 					Ball ball = ballarray.get(i);
 
 					electricField[x][y].add(
-							calculateElectricField(ball,  new Point (x, y)));
+					calculateElectricField(ball,  new Point (x, y)));
 				}
 			}
 		}
-
 	}
 
 	private Force calculateElectricField(Ball ball, Point point) {
@@ -718,7 +674,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	public Force CalculateForce(Ball ballA, Ball ballB) {
-		// TODO Auto-generated method stub
 		double magnitude = Math.abs(ballA.charge) * Math.abs(ballB.charge);
 		boolean attract = attract(ballA, ballB);
 		magnitude *= k;
@@ -740,7 +695,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		
 
 		double theta = calculateTheta(ballA, ballB);
-		if(!attract){
+		if(!attract) {
 			theta+=Math.PI;
 		}
 		Force retval = new Force(magnitude, theta);
@@ -749,7 +704,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	private double calculateTheta(Ball b1, Ball b2) {
-		// TODO Auto-generated method stub
 		double theta = 0;
 		double xComp = b1.x - b2.x;
 		double yComp = b1.y - b2.y;
@@ -763,7 +717,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		else if(xComp == 0) {
 			if(yComp == 0) {
 				return 00;
-			}else if (yComp > 0){
+			}else if (yComp > 0) {
 				return Math.PI/2;
 			}else if(yComp < 0) {
 				return 3*Math.PI/2;
@@ -772,7 +726,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		return theta;
 	}
 
-	private double calculateTheta2(Ball b1, Ball b2){
+	private double calculateTheta2(Ball b1, Ball b2) {
 		return Math.atan2(b1.x-b2.x, b1.y-b2.y);
 	}
 
@@ -788,10 +742,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		paintloop = value;
 	}
 
-
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -859,7 +811,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			Robot robot = new Robot();
 			System.out.println(robot.getPixelColor(a.getX(), a.getY()));
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -874,14 +825,14 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						&&a.getY()>=b.y-b.getRadius()&&a.getY()<=b.y+b.getRadius()
 						)spaceFree=false;
 			}
-			if(!spaceFree){
-				for(Ball b : ballarray){
+			if(!spaceFree) {
+				for(Ball b : ballarray) {
 					if(a.getX()>=b.x-b.getRadius()&&a.getX()<=b.x+b.getRadius()
 							&&a.getY()>=b.y-b.getRadius()&&a.getY()<=b.y+b.getRadius()
 							)ballInSpace = b;
 				}
 			}
-			if(addOrEditBoolean){
+			if(addOrEditBoolean) {
 			if(spaceFree){
 				
 				if(hostProgram.getJFrameById("Add Ball")==null){
@@ -933,9 +884,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					
 
 
-				}else{hostProgram.getJFrameById("Add Ball").toFront();}
-
-
+				} else{hostProgram.getJFrameById("Add Ball").toFront();}
 				
 			}
 			else //addOrEditBoolean = true, but spaceFree = false.
@@ -984,26 +933,18 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Display getSelf(){
@@ -1031,8 +972,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 		@Override
 		public void propertyChange(PropertyChangeEvent arg0) {
-			// TODO Auto-generated method stub
-
 		}
 	}
 }

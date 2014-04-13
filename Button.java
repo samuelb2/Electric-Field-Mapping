@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 
@@ -24,7 +25,12 @@ import javax.swing.JButton;
 
 		public void actionPerformed(ActionEvent arg0) {
 			this.setText(strs[(timesClicked+1)%roundLength]);
-			command.execute(timesClicked);
+			try {
+				command.execute(timesClicked);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			timesClicked++;	
 
 		}
