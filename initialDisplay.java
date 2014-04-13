@@ -64,21 +64,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button elasticWallsButton;
 	private Button Voltage;
 	private Button addOrEdit;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-	private Button saveToFile;
-	private Button loadFromFile;
->>>>>>> FETCH_HEAD
-=======
-	private Button saveToFile;
-	private Button loadFromFile;
->>>>>>> FETCH_HEAD
-=======
-	private Button saveToFile;
-	private Button loadFromFile;
->>>>>>> FETCH_HEAD
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
@@ -176,19 +161,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		for (int i = 0; i<3; i++) {
 			for (int j = 0; j<2; j++) {
 				ballarray.add(new Ball(this,0.00015, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			
-=======
-				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
->>>>>>> FETCH_HEAD
-=======
-				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
->>>>>>> FETCH_HEAD
-=======
-				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
->>>>>>> FETCH_HEAD
 				originalX.add(ballarray.get(ballarray.size()-1).x);
 				originalY.add(ballarray.get(ballarray.size()-1).y);
 
@@ -206,7 +179,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		}
 
 		ballarray.add(new Ball(this,0.000075, width/2-135+0*30, height/6+65+5*30, 0, 0, -Math.max(Math.random()*100/1000000, 35/1000000)));
-		ballarray.add(new Ball(this,10, width/2-135+0*30, height/6+65+5*30, 0, 0, -Math.max(Math.random()*100/1000000, 35/1000000)));
 
 		originalX.add(ballarray.get(ballarray.size()-1).x);
 		originalY.add(ballarray.get(ballarray.size()-1).y);

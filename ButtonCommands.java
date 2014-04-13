@@ -3,18 +3,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import java.io.BufferedReader;
->>>>>>> FETCH_HEAD
-=======
-import java.io.BufferedReader;
->>>>>>> FETCH_HEAD
-=======
-import java.io.BufferedReader;
->>>>>>> FETCH_HEAD
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.*;
@@ -151,6 +139,7 @@ class addOrEditCommand extends ButtonCommands{
 	private final initialDisplay newD = (initialDisplay) d;
 	addOrEditCommand(Display d) {
 		super(d);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -197,22 +186,10 @@ class updateBallCommand extends ButtonCommands{
 	}
 }
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 class DataToFile extends ButtonCommands {
 	initialDisplay newD = (initialDisplay) d;
 	
 	DataToFile(initialDisplay d) {
-=======
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-class SaveToFile extends ButtonCommands {
-	initialDisplay newD = (initialDisplay) d;
-	
-	SaveToFile(initialDisplay d) {
 		super(d);
 	}
 
@@ -221,45 +198,6 @@ class SaveToFile extends ButtonCommands {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file path: ");
 		Path file = Paths.get(s.next());
-		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
-			out.write(newD.ballarray.size());
-			for (Ball a : newD.ballarray) {
-				out.write(a.toString() + '\n');
-			}
-
-			out.write("ballsMoving: " + newD.ballsMoving + '\n');
-			out.write("voltageCalcing: " + newD.voltageCalcing + '\n');
-			out.write("drawVoltage: " + newD.drawVoltage + '\n');
-			out.write("drawBalls: " + newD.drawBalls + '\n');
-			out.write("elasticWalls: " + newD.elasticWalls + '\n');
-		} catch (IOException x) {
-			System.err.format("IOException: %s%n", x);
-		}
-	}
-}
-
-class LoadFromFile extends ButtonCommands {
-	initialDisplay newD = (initialDisplay) d;
-	
-	LoadFromFile(initialDisplay d) {
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-		super(d);
-	}
-
-	@Override
-	void execute(int caseNum) throws IOException {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Please input file path: ");
-		Path file = Paths.get(s.next());
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
 			for (Ball a : newD.ballarray) {
 				out.write(a.toString());
@@ -272,31 +210,6 @@ class LoadFromFile extends ButtonCommands {
 			out.write("elasticWalls: " + newD.elasticWalls);
 
 			System.out.println("Ball and button data saved to data.txt");
-=======
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-		try (Scanner in = new Scanner(file);) {
-			int n = in.nextInt();
-			newD.ballarray.clear();
-			for (int i = 0; i < n; i++) {
-				Ball a = new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), in.nextDouble(), 
-						in.nextDouble(), in.nextDouble());
-				newD.ballarray.add(a);
-			}
-			newD.ballsMoving = in.nextBoolean();
-			newD.voltageCalcing = in.nextBoolean();
-			newD.drawVoltage = in.nextBoolean();
-			newD.drawBalls = in.nextBoolean();
-			newD.elasticWalls = in.nextBoolean();
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
 		}
