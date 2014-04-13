@@ -3,7 +3,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.*;

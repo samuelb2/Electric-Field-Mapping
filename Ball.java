@@ -18,8 +18,8 @@ public class Ball {
 		mySize = Math.pow(400000*mass, 0.5)*2;
 		x = X;
 		y = Y;
-		dx = dx;
-		dy = dy;
+		this.dx = dx;
+		this.dy = dy;
 		this.mass = mass;
 
 		//double angle = 2 * Math.PI * Math.random();  // Random direction.
