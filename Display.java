@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-
 abstract class Display extends JComponent {
 
 	Program hostProgram;
@@ -17,9 +16,7 @@ abstract class Display extends JComponent {
 	// this.setBounds(0,0,w, h); to this.setBounds(xOffSet,yOffSet,w, h);
 	int width;
 	int height;
-	
-	
-	
+
 	public Display(int w, int h, JFrame f, Program program) {
 		//Not Supporting offsets.
 		/*this.x = x;
@@ -29,15 +26,9 @@ abstract class Display extends JComponent {
 		hostFrame = f;
 		hostProgram = program;
 		this.setBounds(0,0,width, height);
-
-		
 	}
 
-
-
 	abstract void init();
-	
-	
+
 	protected abstract void paintComponent(Graphics g);
-	
 }

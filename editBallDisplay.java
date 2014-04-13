@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 
 public class editBallDisplay extends Display{
-	
+
 	private final initialDisplay d;
 	private final int ballIndex;
 	private Ball ball;
@@ -19,19 +19,19 @@ public class editBallDisplay extends Display{
 
 	@Override
 	void init() {
-		String[] startStrs = {"Update Ball"};		
+		String[] startStrs = {"Update Ball"};
 		Button ballEdit = new Button( new updateBallCommand(hostFrame, d, ball, ballIndex ), startStrs);
 		ballEdit.setBounds(width/2-50, height*7/9, 100, 50);
 		add(ballEdit);
 		ballEdit.setVisible(true);
-	
-		
+
+
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

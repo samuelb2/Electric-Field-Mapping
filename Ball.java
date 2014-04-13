@@ -9,7 +9,7 @@ public class Ball {
 	public initialDisplay d;
 	private Color color = Color.GREEN;
 	public static final Color defualtColor = Color.green;
-	
+
 	public Force force = new Force();
 	Line2D.Double forceVector;
 
@@ -22,9 +22,9 @@ public class Ball {
 		dx = dx;
 		dy = dy;
 		this.mass = mass;
-		
+
 		//double angle = 2 * Math.PI * Math.random();  // Random direction.
-		
+
 		hitWall = false;
 		this.charge = charge;
 	}
@@ -32,7 +32,7 @@ public class Ball {
 	public double getRadius() {
 		return mySize/2;
 	}
-	
+
 
 	public double getXSpeed() {
 		return dx;
@@ -57,8 +57,8 @@ public class Ball {
 		dy+=Math.sin(accelerationD)*acceleration*tickLength/1000;
 		x = x+dx*tickLength/1000;
 		y = y+dy*tickLength/1000;
-	} 
-	
+	}
+
 	public void updateAcceleration() {
 		acceleration = force.magnitude/mass;
 		accelerationD = force.direction;
@@ -75,7 +75,7 @@ public class Ball {
 		/*
 		 * checks collisions with walls
 		 */
-		
+
 		if (x+radius >= width*5/6) {
 			if(d.elasticWalls)dx*=-1;else if(dx>0)dx = 0;//If walls are inelastic, and ball is trying
 														 //to move right.
@@ -93,7 +93,7 @@ public class Ball {
 			if(d.elasticWalls)dy*=-1;else if(dy<0)dy=0;//If ball is trying to move up.
 			hitWall = true;
 		}
-	
+
 		/*
 		 * makes sure balls wont escape if they glitch out
 		 */

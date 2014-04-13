@@ -14,24 +14,24 @@ public abstract class ButtonCommands {
 	ButtonCommands(Display d) {
 		this.d = d;
 	}
-	
+
 	abstract void execute(int caseNum) throws IOException;
 }
 
 class pauseBallMovement extends ButtonCommands {
 	initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
-	
+
 
 	pauseBallMovement(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
 	}
 
-	
+
 	@Override
 	void execute(int caseNum) {
 		switch(caseNum%2){
-		case 0:	
+		case 0:
 			newD.ballsMoving = true;
 			break;
 		case 1:
@@ -57,7 +57,7 @@ class Reset extends ButtonCommands{
 
 class VoltageOnOff extends ButtonCommands{
 	private final initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
-	
+
 	VoltageOnOff(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
@@ -112,7 +112,7 @@ class addBallCommand extends ButtonCommands {
 	private final double yspeed;
 	private final double charge;
 	private final int pendingBallArraySizeBeforeAddingOurBall;
-	
+
 	addBallCommand(JFrame callingFrame, initialDisplay d, double size, double X, double Y, double xspeed, double yspeed, double charge, int pendingBallArraySize) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
@@ -139,16 +139,15 @@ class addOrEditCommand extends ButtonCommands{
 	private final initialDisplay newD = (initialDisplay) d;
 	addOrEditCommand(Display d) {
 		super(d);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	void execute(int caseNum) {
 switch(caseNum%2){
-		
-		
+
+
 		case 0:
-			
+
 			newD.addOrEditBoolean = false;
 			//Going to edit.
 			break;
@@ -157,20 +156,20 @@ switch(caseNum%2){
 			//Going to add.
 			break;
 		}
-		
+
 	}
-	
+
 }
 
 class updateBallCommand extends ButtonCommands{
-	
+
 	private final JFrame callingFrame;
 	private final initialDisplay newD = (initialDisplay) d;
 	private final Ball b;
 	private final int ballIndex;
 
-	
-	
+
+
 	updateBallCommand(JFrame callingFrame,Display d, Ball b, int ballIndex) {
 		super(d);
 		this.b = b;
@@ -182,14 +181,13 @@ class updateBallCommand extends ButtonCommands{
 		b.setColor(Ball.defualtColor);
 		newD.ballarray.set(ballIndex, b);
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
-		
+
 	}
 }
-	
-class DataToFile extends ButtonCommands {
+class SaveToFile extends ButtonCommands {
 	initialDisplay newD = (initialDisplay) d;
-	
-	DataToFile(initialDisplay d) {
+
+	SaveToFile(initialDisplay d) {
 		super(d);
 	}
 
@@ -203,13 +201,42 @@ class DataToFile extends ButtonCommands {
 				out.write(a.toString());
 			}
 
-			out.write("ballsMoving: " + newD.ballsMoving);
-			out.write("voltageCalcing: " + newD.voltageCalcing);
-			out.write("drawVoltage: " + newD.drawVoltage);
-			out.write("drawBalls: " + newD.drawBalls);
-			out.write("elasticWalls: " + newD.elasticWalls);
+			out.write("ballsMoving: " + newD.ballsMoving + '\n');
+			out.write("voltageCalcing: " + newD.voltageCalcing + '\n');
+			out.write("drawVoltage: " + newD.drawVoltage + '\n');
+			out.write("drawBalls: " + newD.drawBalls + '\n');
+			out.write("elasticWalls: " + newD.elasticWalls + '\n');
+		} catch (IOException x) {
+			System.err.format("IOException: %s%n", x);
+		}
+	}
+}
 
-			System.out.println("Ball and button data saved to data.txt");
+class LoadFromFile extends ButtonCommands {
+	initialDisplay newD = (initialDisplay) d;
+
+	LoadFromFile(initialDisplay d) {
+		super(d);
+	}
+
+	@Override
+	void execute(int caseNum) throws IOException {
+		Scanner s = new Scanner(System.in);
+		System.out.print("Please input file path: ");
+		Path file = Paths.get(s.next());
+		try (Scanner in = new Scanner(file);) {
+			int n = in.nextInt();
+			newD.ballarray.clear();
+			for (int i = 0; i < n; i++) {
+				Ball a = new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), in.nextDouble(),
+						in.nextDouble(), in.nextDouble());
+				newD.ballarray.add(a);
+			}
+			newD.ballsMoving = in.nextBoolean();
+			newD.voltageCalcing = in.nextBoolean();
+			newD.drawVoltage = in.nextBoolean();
+			newD.drawBalls = in.nextBoolean();
+			newD.elasticWalls = in.nextBoolean();
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
 		}

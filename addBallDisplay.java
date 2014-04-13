@@ -1,13 +1,11 @@
-
-
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
-public class addBallDisplay extends Display{
-	
+public class addBallDisplay extends Display {
+
 	private final int ballX;
 	private final int ballY;
 	private final initialDisplay initialDisplay;
@@ -24,30 +22,17 @@ public class addBallDisplay extends Display{
 
 	@Override
 	void init() {
-		// TODO Auto-generated method stub
-		
-		String[] startStrs = {"Add New Ball"};		
+
+		String[] startStrs = {"Add New Ball"};
 		Button ballAdd = new Button( new addBallCommand(hostFrame,this.initialDisplay, 0.00010, ballX, ballY, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000), pendingBallArraySizeBeforeAddingOurBall), startStrs);
 		ballAdd.setBounds(width/2-50, height*7/9, 100, 50);
 		add(ballAdd);
 		ballAdd.setVisible(true);
-		
-		
-		
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
-
-
-	
-
-
 }
 

@@ -32,9 +32,8 @@ import javax.swing.JButton;
 				e.printStackTrace();
 			}
 			timesClicked++;	
-
 		}
-		
+
 		public void simulateClick(){
 			actionPerformed(new ActionEvent(this, 0, ""));
 		}
