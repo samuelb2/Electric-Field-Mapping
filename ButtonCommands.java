@@ -186,7 +186,7 @@ class updateBallCommand extends ButtonCommands{
 }
 
 class SaveToFile extends ButtonCommands {
-	initialDisplay newD = (initialDisplay) d;
+	private final initialDisplay newD = (initialDisplay) d;
 
 	SaveToFile(initialDisplay d) {
 		super(d);
@@ -215,7 +215,7 @@ class SaveToFile extends ButtonCommands {
 }
 
 class LoadFromFile extends ButtonCommands {
-	initialDisplay newD = (initialDisplay) d;
+	private final initialDisplay newD = (initialDisplay) d;
 
 	LoadFromFile(initialDisplay d) {
 		super(d);
