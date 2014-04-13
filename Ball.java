@@ -34,10 +34,10 @@ public class Ball {
 	}
 	
 
-	public double getXSpeed(){
+	public double getXSpeed() {
 		return dx;
 	}
-	public double getYSpeed(){
+	public double getYSpeed() {
 		return dy;
 	}
 
@@ -63,11 +63,10 @@ public class Ball {
 		acceleration = force.magnitude/mass;
 		accelerationD = force.direction;
 	}
-	public void updateForceVector(){
+	public void updateForceVector() {
 		forceVector = new Line2D.Double(x, y, x +
 				Math.cos(force.direction)*force.magnitude,
 				y + Math.sin(force.direction)*force.magnitude);
-		
 	}
 
 	public void wallcollisions(int width, int height) {
@@ -119,19 +118,19 @@ public class Ball {
 	public double getY() {
 		return y;
 	}
-	public void setY(double y){
+	public void setY(double y) {
 		this.y = y;
 	}
-	public double getX(){
+	public double getX() {
 		return x;
 	}
-	public void setX(double x){
+	public void setX(double x) {
 		this.x = x;
 	}
-	public Color getColor(){
+	public Color getColor() {
 		return color;
 	}
-	public void setColor(Color c){
+	public void setColor(Color c) {
 		this.color = c;
 	}
 	public void setMass(double m){
@@ -141,7 +140,8 @@ public class Ball {
 	private void setSize(double d){
 		this.mySize = d;
 	}
+	public String toString() {
+		return x + " " + y + " " + mySize + " " + mass + " " + charge;
+	}
 
 }
-
-

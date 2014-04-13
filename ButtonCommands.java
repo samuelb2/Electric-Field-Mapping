@@ -3,51 +3,45 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public abstract class ButtonCommands{
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.util.Scanner;
+
+public abstract class ButtonCommands {
 	Display d;
-	ButtonCommands(Display d){
+	ButtonCommands(Display d) {
 		this.d = d;
 	}
 	
-	abstract void execute(int caseNum);
+	abstract void execute(int caseNum) throws IOException;
 }
 
-class pauseBallMovement extends ButtonCommands{
-	private final initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
+class pauseBallMovement extends ButtonCommands {
+	initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
 	
 
 	pauseBallMovement(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
-		
 	}
 
 	
 	@Override
 	void execute(int caseNum) {
-		
-
 		switch(caseNum%2){
-		
-		
-		case 0:
-			
+		case 0:	
 			newD.ballsMoving = true;
-			
 			break;
 		case 1:
 			newD.ballsMoving = false;
-			
 			break;
 		}
 	}
-	
 }
 
 class Reset extends ButtonCommands{
-
-	
-
 	Reset(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
@@ -57,10 +51,7 @@ class Reset extends ButtonCommands{
 	void execute(int caseNum) {
 		d.removeAll();
 		d.init();
-		
-		
 	}
-	
 }
 
 
@@ -73,9 +64,7 @@ class VoltageOnOff extends ButtonCommands{
 	}
 
 	void execute(int caseNum) {
-
 		switch(caseNum%2){
-		
 		case 0:
 			newD.drawVoltage = true;
 			newD.voltageCalcing = true;
@@ -90,14 +79,10 @@ class VoltageOnOff extends ButtonCommands{
 			break;
 		}
 	}
-	
 }
 
 class toogleElasticWalls extends ButtonCommands{
-
-	private final initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
-	
-
+	initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
 	toogleElasticWalls(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
@@ -113,12 +98,10 @@ class toogleElasticWalls extends ButtonCommands{
 			newD.elasticWalls = true;
 			break;
 		}
-		
 	}
-	
 }
 
-class addBallCommand extends ButtonCommands{
+class addBallCommand extends ButtonCommands {
 
 	private final JFrame callingFrame;
 	private final initialDisplay d;
@@ -142,16 +125,12 @@ class addBallCommand extends ButtonCommands{
 		this.yspeed = yspeed;
 		this.charge = charge;
 		this.pendingBallArraySizeBeforeAddingOurBall = pendingBallArraySize;
-		
 	}
 
 	@Override
 	void execute(int caseNum) {
 		d.toAdd.add(new Ball(d, size, X, Y, xspeed, yspeed, charge));
-		
-		
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
-		
 	}
 }
 
@@ -205,5 +184,34 @@ class updateBallCommand extends ButtonCommands{
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
 		
 	}
+}
 	
+class DataToFile extends ButtonCommands {
+	initialDisplay newD = (initialDisplay) d;
+	
+	DataToFile(initialDisplay d) {
+		super(d);
+	}
+
+	@Override
+	void execute(int caseNum) throws IOException {
+		Scanner s = new Scanner(System.in);
+		System.out.print("Please input file path: ");
+		Path file = Paths.get(s.next());
+		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
+			for (Ball a : newD.ballarray) {
+				out.write(a.toString());
+			}
+
+			out.write("ballsMoving: " + newD.ballsMoving);
+			out.write("voltageCalcing: " + newD.voltageCalcing);
+			out.write("drawVoltage: " + newD.drawVoltage);
+			out.write("drawBalls: " + newD.drawBalls);
+			out.write("elasticWalls: " + newD.elasticWalls);
+
+			System.out.println("Ball and button data saved to data.txt");
+		} catch (IOException x) {
+			System.err.format("IOException: %s%n", x);
+		}
+	}
 }
