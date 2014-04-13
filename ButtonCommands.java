@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -7,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.*;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class ButtonCommands {
@@ -143,7 +145,7 @@ class addOrEditCommand extends ButtonCommands{
 
 	@Override
 	void execute(int caseNum) {
-switch(caseNum%2){
+		switch(caseNum%2){
 
 
 		case 0:
@@ -232,7 +234,7 @@ class LoadFromFile extends ButtonCommands {
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
 				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), 
-							in.nextDouble(), in.nextDouble(), in.nextDouble()));
+						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();
 			newD.ballsMoving = in.nextBoolean();
@@ -249,4 +251,54 @@ class LoadFromFile extends ButtonCommands {
 			newD.messages.addMessage("File not found.", onScreenMessage.CENTER);
 		}
 	}
+}
+class ballOrWallCommand extends ButtonCommands{
+	private final initialDisplay newD = (initialDisplay) d;
+	ballOrWallCommand(Display d) {
+		super(d);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	void execute(int caseNum) {
+		switch(caseNum%2){
+
+
+		case 0:
+
+			newD.ballOrWall = false;
+			//Going to wall.
+			break;
+		case 1:
+			newD.ballOrWall = true;
+			//Going to ball.
+			break;
+		}
+
+	}
+
+}
+class addInanimateCommand extends ButtonCommands{
+	
+	private final initialDisplay d;
+	private final Program p;
+	private final double charge;
+	private final ArrayList<Point> v;
+	private final JFrame callingFrame;
+
+	addInanimateCommand(initialDisplay d, JFrame callingFrame, Program host, double charge, ArrayList<Point> vertecies) {
+		super(d);
+		this.d = d;
+		this.p = host;
+		this.charge = charge;
+		this.v = vertecies;
+		this.callingFrame = callingFrame;
+	}
+
+	@Override
+	void execute(int caseNum) {
+		d.inAnimates.add(new inanimateObject(p, d, charge, v));
+		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
+	}
+	
 }

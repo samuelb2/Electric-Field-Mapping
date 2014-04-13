@@ -8,6 +8,7 @@ import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -16,14 +17,14 @@ public class Program {
 	ArrayList<JFrame> frames = new ArrayList<JFrame>();
 	ArrayList<String> framesId = new ArrayList<String>();
 
-	static JFrame initialF = new JFrame();
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	static double width = screenSize.getWidth();
-	static double height = screenSize.getHeight();
-	static final int DISPLAY_WIDTH = (int) (width/1.2);
-	static final int DISPLAY_HEIGHT = (int) (height/1.2);
-	static final int xOffSet = 10;
-	static final int yOffSet = xOffSet;
+	JFrame initialF = new JFrame();
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	double width = screenSize.getWidth();
+	double height = screenSize.getHeight();
+	final int DISPLAY_WIDTH = (int) (width/1.2);
+	final int DISPLAY_HEIGHT = (int) (height/1.2);
+	final int xOffSet = 10;
+	final int yOffSet = xOffSet;
 
 	Program() { initialF.setSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	initialF.setLayout(null);
@@ -72,5 +73,10 @@ public class Program {
 			return frames.get(i);
 		}
 		return null;
+	}
+	public void closeAllFrames(){//Closes all frames except initialF
+		for(JFrame f : frames){
+			f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+		}
 	}
 }

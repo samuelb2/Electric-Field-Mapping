@@ -49,6 +49,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	//ability to add. Must be public so that other classes can add to this (such as the popup).
 	public ArrayList<Ball> pendingBalls;//Used to display where you are adding a ball
 	//Balls are in here only while they are being created using creation window.
+	public ArrayList<Point> verteciesOfBeingAddedInAnimate;//Temp representation of vertecies of being added inanimate
+	public ArrayList<inanimateObject> inAnimates;
 
 	int xdif = 0;
 	int ydif = 0;
@@ -65,6 +67,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button addOrEdit;
 	private Button saveToFile;
 	private Button loadFromFile;
+	private Button typeBallOrWall;
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
@@ -88,13 +91,19 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	boolean drawBalls;
 	boolean elasticWalls;
 	boolean addOrEditBoolean;//Add - true, Edit - false.
+	boolean ballOrWall; //Ball - true, Wall - false.
 
 	public initialDisplay(int w, int h, JFrame f, Program program) {
 		super(w, h, f, program);
+		
+		
+		
+		
 		init();
 	}
 
 	public void init() {
+		//hostProgram.closeAllFrames();//Closes stuff like "Add New Ball"...
 		messages = new onScreenMessage(hostProgram);
 		this.voltageBarX = (int)(width/1.18);
 		this.voltageBarY = height/6 + height/100;
@@ -140,7 +149,14 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		loadFromFile = new Button (new LoadFromFile(this), loadFromFileStrings, height/9 +725, width/20, 100, 50);
 		add(loadFromFile);
 		loadFromFile.setVisible(true);
+		
+		String[] ballOrWallStrs = {"Type: Animate", "Type: Inanimate"};
+		typeBallOrWall = new Button (new ballOrWallCommand(this), ballOrWallStrs, height/9 +825, width/20, 100, 50);
+		add(typeBallOrWall);
+		typeBallOrWall.setVisible(true);
 
+		inAnimates = new ArrayList<inanimateObject>();
+		verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
 		toAdd = new LinkedList<Ball>();
 		ballarray = new ArrayList<Ball>();
 		pendingBalls = new ArrayList<Ball>();
@@ -205,6 +221,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		voltageBarMin.setVisible(false);
 		elasticWalls = true;
 		addOrEditBoolean = true;
+		ballOrWall = true;
 
 		repaint();
 	}
@@ -218,6 +235,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
+		
 		g.setColor(Color.BLACK);
 		if(elasticWalls)g.setColor(Color.green);
 
@@ -269,6 +290,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					pendingBalls.get(i).setColor(new Color(255,153,0, 128)); //Fourth value is opacity, int between 0 and 255.
 					pendingBalls.get(i).draw(g);}
 				}
+				
+				for(inanimateObject j : inAnimates){
+					j.draw(g);
+				}
+			}
+			
+			for(Point v: verteciesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
+				g.setColor(new Color(255, 111, 0));
+				g.fillOval(v.x, v.y, 5, 5);
 			}
 			repaint();
 		}
@@ -815,6 +845,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							)ballInSpace = b;
 				}
 			}
+			if(ballOrWall){
 			if(addOrEditBoolean) {
 			if(spaceFree){
 
@@ -902,9 +933,44 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				}
 			}
 
+		}else{//ballOrWall = false;
+			if(hostProgram.getJFrameById("Add Inanimate")==null){
+				final boolean ballsWhereMoving;
+
+				if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+				else ballsWhereMoving = false;
+
+				hostProgram.createJFrame(50, 50, "Add Inanimate", new Color(255,153,0), false, "Add Inanimate");
+
+				final JFrame editBallF = hostProgram.getJFrameById("Add Inanimate");
+				editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
+				    @Override
+				    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				    	if(ballsWhereMoving){
+				    		if(!ballsMoving)ballStart.simulateClick();
+				    	}
+				    	hostProgram.framesId.remove("Add Inanimate");
+				    	hostProgram.frames.remove(editBallF);
+				    	verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
+				    	}});
+
+				Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this);
+				editBallF.add(editBallD);
+				
+				verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+
+	} else {
+		//hostProgram.getJFrameById("Edit Ball").toFront();
+		//In this case we don't bring to front, because it will always be up when we click
+		//to add more vertecies and we don't want user to keep jumping between windows.
+		
+		verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+		}
+			
 		}
 
 	}
+}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
