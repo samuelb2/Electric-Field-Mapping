@@ -5,6 +5,10 @@ import javax.swing.JLabel;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import java.io.BufferedReader;
+>>>>>>> FETCH_HEAD
 =======
 import java.io.BufferedReader;
 >>>>>>> FETCH_HEAD
@@ -195,11 +199,14 @@ class updateBallCommand extends ButtonCommands{
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 class DataToFile extends ButtonCommands {
 	initialDisplay newD = (initialDisplay) d;
 	
 	DataToFile(initialDisplay d) {
 =======
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 class SaveToFile extends ButtonCommands {
@@ -236,6 +243,9 @@ class LoadFromFile extends ButtonCommands {
 	
 	LoadFromFile(initialDisplay d) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
@@ -247,6 +257,7 @@ class LoadFromFile extends ButtonCommands {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file path: ");
 		Path file = Paths.get(s.next());
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
@@ -264,6 +275,8 @@ class LoadFromFile extends ButtonCommands {
 =======
 =======
 >>>>>>> FETCH_HEAD
+=======
+>>>>>>> FETCH_HEAD
 		try (Scanner in = new Scanner(file);) {
 			int n = in.nextInt();
 			newD.ballarray.clear();
@@ -278,6 +291,9 @@ class LoadFromFile extends ButtonCommands {
 			newD.drawBalls = in.nextBoolean();
 			newD.elasticWalls = in.nextBoolean();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD

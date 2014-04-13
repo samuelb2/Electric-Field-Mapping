@@ -142,7 +142,11 @@ public class Ball {
 	public String toString() {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return x + " " + y + " " + mySize + " " + mass + " " + charge;
+=======
+		return mass + " " + x + " " + y + " " + dx + " " + dy + " " + charge;
+>>>>>>> FETCH_HEAD
 =======
 		return mass + " " + x + " " + y + " " + dx + " " + dy + " " + charge;
 >>>>>>> FETCH_HEAD

@@ -66,6 +66,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button addOrEdit;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	private Button saveToFile;
+	private Button loadFromFile;
+>>>>>>> FETCH_HEAD
 =======
 	private Button saveToFile;
 	private Button loadFromFile;
@@ -173,7 +178,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				ballarray.add(new Ball(this,0.00015, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
+=======
+				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
+>>>>>>> FETCH_HEAD
 =======
 				ballarray.add(new Ball(this,15, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
 >>>>>>> FETCH_HEAD
