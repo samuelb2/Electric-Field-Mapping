@@ -104,7 +104,6 @@ class toogleElasticWalls extends ButtonCommands{
 }
 
 class addBallCommand extends ButtonCommands {
-
 	private final JFrame callingFrame;
 	private final initialDisplay newD = (initialDisplay) d;
 	private final addBallDisplay d2;
@@ -120,14 +119,13 @@ class addBallCommand extends ButtonCommands {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
 		this.callingFrame = callingFrame;
-		
+
 		this.d2 = d2;
-		
 	}
 
 	@Override
 	void execute(int caseNum) {
-		System.out.println("HI");
+		//System.out.println("HI");
 		this.mass = d2.getMass();
 		this.X = d2.getX();
 		this.Y = d2.getY();
@@ -149,10 +147,7 @@ class addOrEditCommand extends ButtonCommands{
 	@Override
 	void execute(int caseNum) {
 		switch(caseNum%2){
-
-
 		case 0:
-
 			newD.addOrEditBoolean = false;
 			//Going to edit.
 			break;
@@ -161,19 +156,14 @@ class addOrEditCommand extends ButtonCommands{
 			//Going to add.
 			break;
 		}
-
 	}
-
 }
 
 class updateBallCommand extends ButtonCommands{
-
 	private final JFrame callingFrame;
 	private final initialDisplay newD = (initialDisplay) d;
 	private final Ball b;
 	private final int ballIndex;
-
-
 
 	updateBallCommand(JFrame callingFrame,Display d, Ball b, int ballIndex) {
 		super(d);
@@ -185,15 +175,15 @@ class updateBallCommand extends ButtonCommands{
 	void execute(int caseNum) {
 		b.setColor(Ball.defualtColor);
 		newD.ballarray.set(ballIndex, b);
-		if(b.mass==0){
+		if (b.mass == 0) {
 			int index = newD.ballarray.indexOf(b);
 			newD.ballarray.remove(index);
 			newD.remove(newD.chargeDisplay.get(index));
 			newD.chargeDisplay.remove(index);
-			System.out.println("dd");
+			//newD.repaint();
+			//System.out.println("dd");
 		}
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
-
 	}
 }
 
@@ -208,13 +198,12 @@ class SaveToFile extends ButtonCommands {
 	void execute(int caseNum) {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
-		Path file = Paths.get("/src/Save Data/" + s.next());
+		Path file = Paths.get("Save Data/" + s.next());
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
 			out.write(String.valueOf(newD.ballarray.size()) + '\n');
 			for (Ball a : newD.ballarray) {
 				out.write(a.toString() + '\n');
 			}
-
 			out.write("ballsMoving: " + newD.ballsMoving + '\n');
 			out.write("voltageCalcing: " + newD.voltageCalcing + '\n');
 			out.write("drawVoltage: " + newD.drawVoltage + '\n');
@@ -236,14 +225,12 @@ class LoadFromFile extends ButtonCommands {
 
 	@Override
 	void execute(int caseNum) {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Please input file name: ");
-		Path file = Paths.get("/src/Save Data/" + s.next());
+		Path file = Paths.get("Save Data/" + newD.presetSelected);
 		try (Scanner in = new Scanner(file);) {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-				newD.ballarray.add(new Ball(newD, in.nextDouble(), (int)in.nextDouble(), (int)in.nextDouble(), 
+				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(),
 						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();
@@ -266,16 +253,12 @@ class ballOrWallCommand extends ButtonCommands{
 	private final initialDisplay newD = (initialDisplay) d;
 	ballOrWallCommand(Display d) {
 		super(d);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	void execute(int caseNum) {
 		switch(caseNum%2){
-
-
 		case 0:
-
 			newD.ballOrWall = false;
 			//Going to wall.
 			break;
@@ -284,12 +267,9 @@ class ballOrWallCommand extends ButtonCommands{
 			//Going to ball.
 			break;
 		}
-
 	}
-
 }
 class addInanimateCommand extends ButtonCommands{
-	
 	private final initialDisplay d;
 	private final Program p;
 	private final double charge;
@@ -310,5 +290,4 @@ class addInanimateCommand extends ButtonCommands{
 		d.inAnimates.add(new inanimateObject(p, d, charge, v));
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
 	}
-	
 }

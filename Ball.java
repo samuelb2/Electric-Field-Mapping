@@ -156,7 +156,7 @@ public class Ball {
 		this.mySize = d;
 	}
 	public String toString() {
-		return x + " " + y + " " + mySize + " " + mass + " " + charge;
+		return mass + " " + x + " " + y + " " + dx + " " + dy + " " + charge;
 	}
 
 }

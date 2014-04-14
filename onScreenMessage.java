@@ -5,9 +5,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
 public class onScreenMessage {
-
 	private final Program p;
 	private Queue<String> messages = new LinkedList<String>();
 	private Queue<Point> locations = new LinkedList<Point>();
@@ -17,15 +15,21 @@ public class onScreenMessage {
 	public static Point CENTER = new Point(-1000,-1000);//This just calls the getCenterMethod
 	public final Font f = new Font("Gigi", Font.BOLD, 25);
 
-
 	public onScreenMessage(Program p) {
 		this.p = p;
 	}
+
 	public void addMessage(String str, Point loc) {
 		messages.add(str);
 		if(loc.equals(CENTER))loc = getCenter(str, (int)p.width, (int)p.height);
 		locations.add(loc);
 	}
+	
+	public void clearMessages() {
+		messages.clear();
+		locations.clear();
+	}
+
 	public void printMessage() {
 		Graphics g = p.initialF.getGraphics();
 		g.setFont(f);
@@ -34,9 +38,11 @@ public class onScreenMessage {
 		g.setColor(Color.white);
 		g.drawString(messages.poll(), locations.peek().x, locations.poll().y);
 	}
+
 	public boolean isEmpty() {
 		return messages.isEmpty();
 	}
+
 	public Point getCenter(String str, int width, int height) {
 		Graphics g = p.initialF.getGraphics();
 		return new Point((width-g.getFontMetrics(f).stringWidth(str))/2, (height - g.getFontMetrics(f).getHeight())/2);

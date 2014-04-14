@@ -60,10 +60,8 @@ import javax.swing.JButton;
 				
 				this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), newSize));
 			}
-			
-				command.execute(timesClicked);
-			
-			timesClicked++;	
+			command.execute(timesClicked);
+			timesClicked++;
 		}
 
 		public void simulateClick(){
