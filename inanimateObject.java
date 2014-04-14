@@ -1,5 +1,7 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.util.ArrayList;
@@ -108,5 +110,20 @@ public class inanimateObject {
 		g.fillPolygon(shape);
 		g.setColor(Color.cyan);
 		g.fillOval(centroid.x, centroid.y, 5, 5);
+		
+		//Draw border:
+		g.setColor(new Color(0, Math.min(255, 255*d.elasticity/100),0));
+		for(int v = 0 ; v <shape.npoints; v++){
+			Point current = new Point(shape.xpoints[v], shape.ypoints[v]);
+			Point next;
+			if(v == shape.npoints -1) {next = new Point(shape.xpoints[0], shape.ypoints[0]);}
+			else {next = new Point(shape.xpoints[v+1], shape.ypoints[v+1]);}
+			
+			Graphics2D gg = (Graphics2D)g;
+			gg.setStroke(new BasicStroke(3));
+			g.drawLine(current.x, current.y, next.x, next.y);
+			gg.setStroke(new BasicStroke(1));
+		}
+		
 	}
 }

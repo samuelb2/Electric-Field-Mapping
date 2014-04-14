@@ -8,6 +8,7 @@ import java.awt.AWTException;
 
 import javax.swing.JComboBox;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -99,7 +100,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	boolean voltageCalcing;
 	boolean drawVoltage;
 	boolean drawBalls;
-	boolean elasticWalls;
+	//boolean elasticWalls;
 	public int elasticity;
 	boolean addOrEditBoolean;//Add - true, Edit - false.
 	boolean ballOrWall; //Ball - true, Wall - false.
@@ -137,7 +138,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 		this.elasticity = 50;
 		String[] elasticWallsArray = {"Elasticity: " + this.elasticity + "%"};
-		elasticWallsButton = new Button(new toogleElasticWalls(this, hostProgram), elasticWallsArray,height/9 +325, width/20, 100, 50);
+		elasticWallsButton = new Button(new slideElasticWalls(this, hostProgram), elasticWallsArray,height/9 +325, width/20, 100, 50);
 		/*String[] elasticWallsArray = {"Update Elasticity"};
 		elasticWallsButton = new Button(new slideElasticWalls(this), elasticWallsArray,height/9 +325, width/20, 100, 50);
 		*/
@@ -239,7 +240,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		drawBalls = true;
 		voltageBarMax.setVisible(false);
 		voltageBarMin.setVisible(false);
-		elasticWalls = 0;
 		addOrEditBoolean = true;
 		ballOrWall = true;
 
@@ -281,10 +281,12 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			}
 		}
 
-		g.setColor(Color.BLACK);
-		if(elasticWalls)g.setColor(new Color(0,Math.min(255*elasticity/100, 255),0));
-
+		Graphics2D gg = (Graphics2D)g;
+		gg.setStroke(new BasicStroke(3));
+		g.setColor(new Color(0,Math.min(255*elasticity/100, 255),0));
 		g.drawRect(width/6, height/6, width*2/3, height*5/6 - height/10);
+		
+		gg.setStroke(new BasicStroke(1));
 		g.setColor(Color.BLACK);
 		lastvolume=width*height;
 		xdif = hostFrame.getWidth()-width;
@@ -339,6 +341,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			for(Point v: verticesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
 				g.setColor(new Color(255, 111, 0));
 				g.fillOval(v.x, v.y, 5, 5);
+			}
+			for(int v = 0; v < verticesOfBeingAddedInAnimate.size(); v++){
+				g.setColor(new Color(255, 111, 0));
+				g.fillOval(verticesOfBeingAddedInAnimate.get(v).x, verticesOfBeingAddedInAnimate.get(v).y, 5, 5);
+				if(v<verticesOfBeingAddedInAnimate.size()-1){
+					Point current = verticesOfBeingAddedInAnimate.get(v);
+					Point next = verticesOfBeingAddedInAnimate.get(v+1);
+					g.drawLine(current.x, current.y, next.x, next.y);
+				}
 			}
 			repaint();
 		}
