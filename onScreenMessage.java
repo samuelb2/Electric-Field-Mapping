@@ -24,10 +24,7 @@ public class onScreenMessage {
 		if(loc.equals(CENTER))loc = getCenter(str, (int)p.width, (int)p.height);
 		locations.add(loc);
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> FETCH_HEAD
+
 	public void clearMessages() {
 		messages.clear();
 		locations.clear();

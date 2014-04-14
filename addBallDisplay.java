@@ -16,23 +16,23 @@ public class addBallDisplay extends Display {
 	private double dyI;
 	private final Ball pendingBall;
 	private final initialDisplay d;
-	
+
 	private JTextField xCoord, yCoord, mass, charge, dx, dy;
 	private JLabel xCoordL, yCoordL, massL, chargeL, dxL, dyL;
-	
-	
+
+
 	public addBallDisplay(int w, int h, JFrame f, Program program, int ballX, int ballY, initialDisplay d, Ball pendingBall) {
 		super(w, h, f, program);
 		this.ballX = ballX;
 		this.ballY = ballY;
 		this.pendingBall = pendingBall;
-		
+
 		//temp:
 		this.massI = 0.0004;
 		this.chargeI = 0.001;
 		this.dxI = 0;
 		this.dyI = 0;
-		
+
 		this.d = d;
 		init();
 	}
@@ -45,7 +45,7 @@ public class addBallDisplay extends Display {
 		add(ballAdd);
 		ballAdd.setVisible(true);
 		System.out.println(ballAdd.getX() + " " + ballAdd.getY());
-		
+
 		/*
 		int x = hostFrame.getWidth()/3; int y = hostFrame.getHeight()/9;
 		xCoord = new JTextField("XCoord");
@@ -56,7 +56,7 @@ public class addBallDisplay extends Display {
 		System.out.println(xCoord.getY());
 		*/
 		repaint();
-		
+
 	}
 
 	@Override

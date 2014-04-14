@@ -240,24 +240,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	private String[] getAllFiles() {
-<<<<<<< HEAD
-		File directory = new File("Save Data").getAbsoluteFile();
-		File[] files = directory.listFiles();
-		if(files!=null){
-=======
 		File directory = new File("Save Data");
 		File[] files = directory.listFiles();
->>>>>>> FETCH_HEAD
 		String[] filenames = new String[files.length];
+		if (files.length == 0;
+			return new String[] {""};
 		for (int i = 0; i < files.length; i++) {
 			filenames[i] = files[i].getName();
 		}
-<<<<<<< HEAD
-		return filenames;}
-		return new String[] {""};
-=======
 		return filenames;
->>>>>>> FETCH_HEAD
 	}
 
 	public void paintComponent(Graphics g) {
@@ -333,11 +324,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						pendingBalls.get(i).setColor(new Color(255,153,0, 128)); //Fourth value is opacity, int between 0 and 255.
 						pendingBalls.get(i).draw(g);}
 				}
-<<<<<<< HEAD
-
-
-=======
->>>>>>> FETCH_HEAD
 			}
 
 			for(Point v: verteciesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
@@ -419,10 +405,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				//We represent the inAnimates as BALL objects around their centroid. This makes no difference for force calculations.
 				Ball likeABall = new Ball(this, 0, o.getCentroid().x, o.getCentroid().y, 0, 0, -o.getCharge());
 				temp.force.add(CalculateForce(temp, likeABall));
-<<<<<<< HEAD
-
-=======
->>>>>>> FETCH_HEAD
 			}
 		}
 
@@ -834,7 +816,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			else if(hot){
 				System.out.println(new Color(colorVal+127, 0, 128-colorVal));
 			}
-		*/	
+		*/
 	}
 
 	@Override

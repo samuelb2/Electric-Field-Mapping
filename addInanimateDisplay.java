@@ -6,14 +6,14 @@ import javax.swing.JLabel;
 
 public class addInanimateDisplay extends Display {
 
-	
+
 	private final initialDisplay initialDisplay;
-	
+
 	public addInanimateDisplay(int w, int h, JFrame f, Program program, initialDisplay initialDisplay) {
 		super(w, h, f, program);
-	
+
 		this.initialDisplay = initialDisplay;
-		
+
 		init();
 	}
 

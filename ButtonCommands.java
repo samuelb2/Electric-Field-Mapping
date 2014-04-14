@@ -230,11 +230,7 @@ class LoadFromFile extends ButtonCommands {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-<<<<<<< HEAD
-				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(), 
-=======
 				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(),
->>>>>>> FETCH_HEAD
 						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();
