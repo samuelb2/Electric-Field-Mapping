@@ -243,7 +243,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		File directory = new File("Save Data");
 		File[] files = directory.listFiles();
 		String[] filenames = new String[files.length];
-		if (files.length == 0;
+		if (files.length == 0)
 			return new String[] {""};
 		for (int i = 0; i < files.length; i++) {
 			filenames[i] = files[i].getName();
@@ -830,7 +830,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			e.printStackTrace();
 		}
 
-		if (a.getX() /*+radius*/ <= width*5/6 && a.getX() /*-radius*/ >= width/6 + 3 && a.getY()/*+radius*/ <= height*9/10 && a.getY()/*-radius*/ >= height/6 + 3) {
+		if (a.getX() /*+radius*/ <= width*5/6 && a.getX() /*-radius*/ >= width/6 + 3 && a.getY()/*+radius*/ 
+				<= height*9/10 && a.getY()/*-radius*/ >= height/6 + 3) {
 			System.out.println("in box");
 
 			//Make sure we are not placing this on another ball.
@@ -838,25 +839,25 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			Ball temp = null;
 			for(Ball b : ballarray){
 				if(a.getX()>=b.getX()-b.getRadius()&&a.getX()<=b.getX()+b.getRadius()
-						&&a.getY()>=b.getY()-b.getRadius()&&a.getY()<=b.getY()+b.getRadius()
-						)spaceFree=false;
+						&&a.getY()>=b.getY()-b.getRadius()&&a.getY()<=b.getY()+b.getRadius())
+						spaceFree = false;
 			}
 			if(!spaceFree) {
 				for(Ball b : ballarray) {
 					if(a.getX()>=b.getX()-b.getRadius()&&a.getX()<=b.getX()+b.getRadius()
-							&&a.getY()>=b.getY()-b.getRadius()&&a.getY()<=b.getY()+b.getRadius()
-							)temp = b;
+							&&a.getY()>=b.getY()-b.getRadius()&&a.getY()<=b.getY()+b.getRadius())
+							temp = b;
 				}
 			}
 			final Ball ballInSpace = temp;
 
-			if(ballOrWall){
-				if(addOrEditBoolean) {
-					if(spaceFree){
-						if(hostProgram.getJFrameById("Add Ball")==null){
+			if (ballOrWall) {
+				if (addOrEditBoolean) {
+					if (spaceFree) {
+						if (hostProgram.getJFrameById("Add Ball") == null){
 							final boolean ballsWhereMoving;
 
-							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving = true;}//Always pause.
 							else ballsWhereMoving = false;
 							hostProgram.createJFrame(50, 50, "Add Ball", new Color(255,153,0), false, "Add Ball");
 
@@ -866,24 +867,24 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							addBallF.addWindowListener(new java.awt.event.WindowAdapter() {
 								@Override
 								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-									if(ballsWhereMoving){
-										if(!ballsMoving)ballStart.simulateClick();
+									if (ballsWhereMoving && !ballsMoving) {
+										ballStart.simulateClick();
 									}
 									hostProgram.framesId.remove("Add Ball");
 									hostProgram.frames.remove(addBallF);
 									pendingBalls.remove(pendingBall);
-
 								}
 							});
 
-							Display addBallD = new addBallDisplay(addBallF.getWidth(), addBallF.getHeight(), addBallF, hostProgram, a.getX(), a.getY(),this, pendingBall);
+							Display addBallD = new addBallDisplay(addBallF.getWidth(), addBallF.getHeight(),
+									addBallF, hostProgram, a.getX(), a.getY(),this, pendingBall);
 							addBallF.add(addBallD);
 
-						} else{hostProgram.getJFrameById("Add Ball").toFront();}
-
+						} else {hostProgram.getJFrameById("Add Ball").toFront();}
 					}
 					else { //addOrEditBoolean = true, but spaceFree = false.
-						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", messages.CENTER);
+						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", 
+								messages.CENTER);
 						// include some time delay
 						messages.clearMessages();
 					}
@@ -910,7 +911,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									ballInSpace.setColor(Ball.defualtColor);
 								}});
 
-							Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this, ballarray.indexOf(ballInSpace));
+							Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(), 
+									editBallF, hostProgram, this, ballarray.indexOf(ballInSpace));
 							editBallF.add(editBallD);
 							ballInSpace.setColor(Color.cyan);
 
@@ -918,11 +920,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					}
 				}
 
-			}else{//ballOrWall = false;
-				if(hostProgram.getJFrameById("Add Inanimate")==null){
+			} else {//ballOrWall = false;
+				if (hostProgram.getJFrameById("Add Inanimate") == null) {
 					final boolean ballsWhereMoving;
 
-					if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+					if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving = true;}//Always pause.
 					else ballsWhereMoving = false;
 
 					hostProgram.createJFrame(50, 25, "Add Inanimate", new Color(255,153,0), false, "Add Inanimate");
@@ -930,18 +932,19 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					final JFrame editBallF = hostProgram.getJFrameById("Add Inanimate");
 					editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
 						@Override
-						public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-							if(ballsWhereMoving){
-								if(!ballsMoving)ballStart.simulateClick();
+						public void windowClosing (java.awt.event.WindowEvent windowEvent) {
+							if (ballsWhereMoving && !ballsMoving) {
+								ballStart.simulateClick();
 							}
 							hostProgram.framesId.remove("Add Inanimate");
 							hostProgram.frames.remove(editBallF);
 							verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
-						}});
+						}
+					});
 
-					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), editBallF, hostProgram, this);
+					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), 
+							editBallF, hostProgram, this);
 					editBallF.add(editBallD);
-
 					verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
 
 				} else {
@@ -991,7 +994,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		}
 
 		class ballDocument extends PlainDocument {
-
 		}
 
 		@Override
