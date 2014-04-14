@@ -84,10 +84,9 @@ class VoltageOnOff extends ButtonCommands{
 	}
 }
 
-class toogleElasticWalls extends ButtonCommands{
-	private final initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
-	private final Program hostProgram;
-	toogleElasticWalls(initialDisplay d, Program p) {
+class slideElasticWalls extends ButtonCommands{
+	initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
+	slideElasticWalls(initialDisplay d) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
 		this.hostProgram = p;
@@ -229,7 +228,6 @@ class SaveToFile extends ButtonCommands {
 			out.write("drawBalls: " + newD.drawBalls + '\n');
 			out.write("elasticWalls: " + newD.elasticWalls + '\n');
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -261,13 +259,14 @@ class LoadFromFile extends ButtonCommands {
 			in.next();
 			newD.drawBalls = in.nextBoolean();
 			in.next();
-			newD.elasticWalls = in.nextBoolean();
+			newD.elasticWalls = in.nextDouble();
 		} catch (IOException x) {
 			System.err.format("IOException: %s%n", x);
-			newD.messages.addMessage("File not found.", onScreenMessage.CENTER);
+			newD.messages.addMessage("File not found", onScreenMessage.CENTER);
 		}
 	}
 }
+
 class ballOrWallCommand extends ButtonCommands{
 	private final initialDisplay newD = (initialDisplay) d;
 	ballOrWallCommand(Display d) {

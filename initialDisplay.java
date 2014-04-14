@@ -36,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingWorker;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
+import javax.swing.JSlider;
 
 public class initialDisplay extends Display implements MouseListener, MouseMotionListener {
 	public onScreenMessage messages;
@@ -76,6 +77,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private Button saveToFile;
 	private Button loadFromFile;
 	private Button typeBallOrWall;
+	public JSlider slideElastic;
 
 	ArrayList<JLabel> chargeDisplay;
 	Force[][] electricField;
@@ -101,10 +103,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public int elasticity;
 	boolean addOrEditBoolean;//Add - true, Edit - false.
 	boolean ballOrWall; //Ball - true, Wall - false.
+	//double elasticWalls; // 0 <= elasticity <= 1
 
 	public initialDisplay(int w, int h, JFrame f, Program program) {
 		super(w, h, f, program);
-
 		init();
 	}
 
@@ -136,9 +138,12 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		this.elasticity = 50;
 		String[] elasticWallsArray = {"Elasticity: " + this.elasticity + "%"};
 		elasticWallsButton = new Button(new toogleElasticWalls(this, hostProgram), elasticWallsArray,height/9 +325, width/20, 100, 50);
+		/*String[] elasticWallsArray = {"Update Elasticity"};
+		elasticWallsButton = new Button(new slideElasticWalls(this), elasticWallsArray,height/9 +325, width/20, 100, 50);
+		*/
 		add(elasticWallsButton);
 		elasticWallsButton.setVisible(true);
-
+		
 		String[] voltageOnOff = {"Voltage: Off", "Voltage: On"};
 		Voltage = new Button (new VoltageOnOff(this), voltageOnOff,height/9 +425, width/20, 100, 50);
 		add(Voltage);
@@ -234,7 +239,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		drawBalls = true;
 		voltageBarMax.setVisible(false);
 		voltageBarMin.setVisible(false);
-		elasticWalls = true;
+		elasticWalls = 0;
 		addOrEditBoolean = true;
 		ballOrWall = true;
 
@@ -245,8 +250,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		File directory = new File("Save Data");
 		File[] files = directory.listFiles();
 		if (files != null && files.length != 0) {
-			String[] filenames = new String[files.length];
-			for (int i = 0; i < files.length; i++) {
+			String[] filenames = new String[files.length-1];
+			for (int i = 0; i < filenames.length; i++) {
+				if (files[i].getName() == "README.md")
+					continue;
 				filenames[i] = files[i].getName();
 			}
 			return filenames;
