@@ -114,7 +114,7 @@ class addBallCommand extends ButtonCommands {
 	private final double yspeed;
 	private final double charge;
 	private final int pendingBallArraySizeBeforeAddingOurBall;
-	
+
 	addBallCommand(JFrame callingFrame, initialDisplay d, double mass, double X, double Y, double xspeed, double yspeed, double charge, int pendingBallArraySize) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.

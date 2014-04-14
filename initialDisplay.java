@@ -765,7 +765,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public void setPaintLoop(boolean value) {
 		paintloop = value;
 	}
-	
+
 	public boolean isAnimate(Point p) {
 		// for now
 		// assumes that animate objects are not inside inanimate ones
@@ -840,7 +840,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			e.printStackTrace();
 		}
 
-		if (a.getX() /*+radius*/ <= width*5/6 && a.getX() /*-radius*/ >= width/6 + 3 && a.getY()/*+radius*/ 
+		if (a.getX() /*+radius*/ <= width*5/6 && a.getX() /*-radius*/ >= width/6 + 3 && a.getY()/*+radius*/
 				<= height*9/10 && a.getY()/*-radius*/ >= height/6 + 3) {
 			System.out.println("in box");
 
@@ -866,11 +866,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					if (spaceFree) {
 						if(hostProgram.getJFrameById("Add Ball")==null){
 							final boolean ballsWhereMoving;
-							
+
 							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
 							else ballsWhereMoving = false;
 									hostProgram.createJFrame(50, 25, "Add Ball", new Color(255,153,0), false, "Add Ball");
-									
+
 									final int pendingBallsSize = pendingBalls.size(); //This is how many balls are already in the process of being added.
 									final JFrame addBallF = hostProgram.getJFrameById("Add Ball");
 									addBallF.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -881,26 +881,26 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									    	}
 									    	hostProgram.framesId.remove("Add Ball");
 									    	hostProgram.frames.remove(addBallF);
-									    	pendingBalls.set(pendingBallsSize, null);//Note: We don't use pendingBalls.size(), 
-									    	//as that size may change, and we want it to remove the current ball -- 
-									    	//We want it to remove the current pending ball, once the adding new ball 
+									    	pendingBalls.set(pendingBallsSize, null);//Note: We don't use pendingBalls.size(),
+									    	//as that size may change, and we want it to remove the current ball --
+									    	//We want it to remove the current pending ball, once the adding new ball
 									    	//JFrame is closed.
 									    	//
-									    	//Note2: Also, there is no -1 after pendingBallsSize, 
+									    	//Note2: Also, there is no -1 after pendingBallsSize,
 									    	//as the ball we want to remove will only be added later,
 									    	//meaning that the current size doesn't include it yet.
 									    	//
 									    	//Note 3: Also, we do not remove from pendingBalls, rather we
 									    	//set to null, as removing would affect the size of the array
-									    	//and in turn affect the indexes of the other balls in the 
+									    	//and in turn affect the indexes of the other balls in the
 									    	//array. Affecting the other indexes of the array is bad,
-									    	//as it breaks the condition set in Note 1, 
+									    	//as it breaks the condition set in Note 1,
 									    	//that pendingBallsSize should be final and never change.
 									    	//Theoretically, it's a waste of storage to set to null,
 									    	//yet as we are talking about manually added balls ONLY in here
 									    	//the only storage space that is lost, is the storage required
 									    	//for storing NULL in an arraylist * the number of balls
-									    	//added manually by user (very small number compared to 
+									    	//added manually by user (very small number compared to
 									    	//data storage which is typically available.
 									    }
 									});
@@ -909,15 +909,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									addBallF.add(addBallD);
 
 									pendingBalls.add(new Ball(this, 0.00040, a.getX(), a.getY(), 0, 0, 0));
-								
-							
+
+
 
 
 						}
-						
-						
+
+
 					else { //addOrEditBoolean = true, but spaceFree = false.
-						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", 
+						messages.addMessage("Cannot add ball here, space is already occupied by another ball.",
 								messages.CENTER);}
 					}
 				}
@@ -943,7 +943,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									ballInSpace.setColor(Ball.defualtColor);
 								}});
 
-							Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(), 
+							Display editBallD = new editBallDisplay(editBallF.getWidth(), editBallF.getHeight(),
 									editBallF, hostProgram, this, ballarray.indexOf(ballInSpace));
 							editBallF.add(editBallD);
 							ballInSpace.setColor(Color.cyan);
@@ -974,7 +974,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						}
 					});
 
-					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), 
+					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(),
 							editBallF, hostProgram, this);
 					editBallF.add(editBallD);
 					verticesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
