@@ -5,9 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-
 public class addBallDisplay extends Display {
-
 	private int ballX;
 	private int ballY;
 	private double massI;
@@ -19,7 +17,6 @@ public class addBallDisplay extends Display {
 
 	private JTextField xCoord, yCoord, mass, charge, dx, dy;
 	private JLabel xCoordL, yCoordL, massL, chargeL, dxL, dyL;
-
 
 	public addBallDisplay(int w, int h, JFrame f, Program program, int ballX, int ballY, initialDisplay d, Ball pendingBall) {
 		super(w, h, f, program);
@@ -39,7 +36,6 @@ public class addBallDisplay extends Display {
 
 	@Override
 	void init() {
-
 		String[] startStrs = {"Add Ball"};
 		Button ballAdd = new Button( new addBallCommand(hostFrame,d, this), startStrs,width/2-50, height*1/9, 100, 50);
 		add(ballAdd);
@@ -61,31 +57,37 @@ public class addBallDisplay extends Display {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.drawString("HIIIII", 50, 50);
+		//g.drawString("HIIIII", 50, 50);
 		g.setColor(Color.black);
 		g.drawRect(this.getX(), this.getY(), this.width, this.height);
 		g.fillRect(0, 0, 5, 5);
 	}
+
 	public int getX(){
 		return ballX;
 	}
+
 	public int getY(){
 		return ballY;
 	}
+
 	public double getMass(){
 		return massI;
 	}
+
 	public double getCharge(){
 		return chargeI;
 	}
+
 	public double getDX(){
 		return dxI;
 	}
+
 	public double getDY(){
 		return dyI;
 	}
+
 	public Ball getPendingBall(){
 		return pendingBall;
 	}
 }
-

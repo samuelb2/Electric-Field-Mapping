@@ -159,7 +159,7 @@ class addOrEditCommand extends ButtonCommands{
 	}
 }
 
-class updateBallCommand extends ButtonCommands{
+class updateBallCommand extends ButtonCommands {
 	private final JFrame callingFrame;
 	private final initialDisplay newD = (initialDisplay) d;
 	private final Ball b;
