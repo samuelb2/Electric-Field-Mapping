@@ -853,6 +853,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			if (ballOrWall) {
 				if (addOrEditBoolean) {
 					if (spaceFree) {
+<<<<<<< HEAD
 						if(hostProgram.getJFrameById("Add Ball")==null){
 							final boolean ballsWhereMoving;
 							
@@ -903,11 +904,46 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 
 						} else{hostProgram.getJFrameById("Add Ball").toFront();}
+=======
+						ballarray.add(new Ball(this, .00015, a.getX(), a.getY(), 0, 0, 0));
+						/*if (hostProgram.getJFrameById("Add Ball") == null){
+							final boolean ballsWhereMoving;
+
+							if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving = true;}//Always pause.
+							else ballsWhereMoving = false;
+							hostProgram.createJFrame(50, 50, "Add Ball", new Color(255,153,0), false, "Add Ball");
+
+							pendingBalls.add(new Ball(this, 0.00040, a.getX(), a.getY(), 0, 0, 0));
+							final Ball pendingBall = pendingBalls.get(pendingBalls.size()-1);
+							final JFrame addBallF = hostProgram.getJFrameById("Add Ball");
+							addBallF.addWindowListener(new java.awt.event.WindowAdapter() {
+								@Override
+								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+									if (ballsWhereMoving && !ballsMoving) {
+										ballStart.simulateClick();
+									}
+									hostProgram.framesId.remove("Add Ball");
+									hostProgram.frames.remove(addBallF);
+									pendingBalls.remove(pendingBall);
+								}
+							});
+
+							Display addBallD = new addBallDisplay(addBallF.getWidth(), addBallF.getHeight(),
+									addBallF, hostProgram, a.getX(), a.getY(),this, pendingBall);
+							addBallF.add(addBallD);
+
+						} else {hostProgram.getJFrameById("Add Ball").toFront();}*/
+>>>>>>> FETCH_HEAD
 					}
 					else { //addOrEditBoolean = true, but spaceFree = false.
 						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", 
 								messages.CENTER);
+<<<<<<< HEAD
 						
+=======
+						// include some time delay
+						messages.clearMessages();
+>>>>>>> FETCH_HEAD
 					}
 				}
 				else {//addOrEditBoolean = false.
