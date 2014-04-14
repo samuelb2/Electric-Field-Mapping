@@ -31,7 +31,7 @@ public class editBallDisplay extends Display{
 		add(xCoordL);
 		xCoordL.setVisible(true);
 		
-		xCoord = new JTextField(new Integer(( ball.getX())).toString());
+		xCoord = new JTextField(new Integer(( (int)ball.getX())).toString());
 		xCoord.setBounds(width/3-50, height/8 -25, 100, 25);
 		add(xCoord);
 		xCoord.setVisible(true);
@@ -46,7 +46,7 @@ public class editBallDisplay extends Display{
 		add(yCoordL);
 		yCoordL.setVisible(true);
 		
-		yCoord = new JTextField(new Integer(( ball.getY())).toString());
+		yCoord = new JTextField(new Integer(( (int)ball.getY())).toString());
 		yCoord.setBounds(width/3-50, height*2/8 -25, 100, 25);
 		add(yCoord);
 		yCoord.setVisible(true);

@@ -22,6 +22,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -44,7 +45,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public final double permitivity_of_free_space = 8.85418782 * Math.pow(10, -12);
 
 	private boolean paintloop = true;
-	public int TIME_BETWEEN_REPLOTS = 50;
+	public int TIME_BETWEEN_REPLOTS = 5;
 	private ballTextField balltextfield;
 
 	public ArrayList<Ball> ballarray;
@@ -56,7 +57,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public ArrayList<inanimateObject> inAnimates;
 
 	public String[] presets;
-	private JComboBox presetCB;
+	private JComboBox<String> presetCB;
 	public String presetSelected;
 
 	int xdif = 0;
@@ -109,7 +110,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public void init() {
 		//hostProgram.closeAllFrames();//Closes stuff like "Add New Ball"...
 		if(hostProgram.getJFrameById("Add Ball")!=null)
-		hostProgram.getJFrameById("Add Ball").dispatchEvent(new WindowEvent(hostProgram.getJFrameById("Add Ball"), WindowEvent.WINDOW_CLOSING));
+			hostProgram.getJFrameById("Add Ball").dispatchEvent(new WindowEvent(hostProgram.getJFrameById("Add Ball"), WindowEvent.WINDOW_CLOSING));
 		messages = new onScreenMessage(hostProgram);
 		this.voltageBarX = (int)(width/1.18);
 		this.voltageBarY = height/6 + height/100;
@@ -162,7 +163,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		typeBallOrWall.setVisible(true);
 
 		presets = getAllFiles();
-		presetCB = new JComboBox(presets);
+		presetCB = new JComboBox<String>(presets);
 		presetCB.setBounds(height/9 +925, width/20, 100, 50);
 		add(presetCB);
 		presetCB.setVisible(true);
@@ -190,8 +191,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		voltageBarMin.setBounds(voltageBarX + 55, voltageBarY + voltageBarLength-50, 50, 75);
 		add(voltageBarMin);
 
-		for (int i = 0; i<3; i++) {
-			for (int j = 0; j<2; j++) {
+		for (int i = 0; i<2; i++) {
+			for (int j = 0; j<3; j++) {
 				ballarray.add(new Ball(this,0.00015, width/2-135+i*30, height/6+65+j*30, 0, 0, Math.max((Math.random()*100/1000000), 200/1000000)));
 				originalX.add((double) ballarray.get(ballarray.size()-1).getX());
 				originalY.add((double) ballarray.get(ballarray.size()-1).getY());
@@ -239,7 +240,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	}
 
 	private String[] getAllFiles() {
-		return new String[] {"HI", "BYE", "GOOD"};
+		File directory = new File("Save Data").getAbsoluteFile();
+		File[] files = directory.listFiles();
+		if(files!=null){
+		String[] filenames = new String[files.length];
+		for (int i = 0; i < files.length; i++) {
+			filenames[i] = files[i].getName();
+		}
+		return filenames;}
+		return new String[] {""};
 	}
 
 	public void paintComponent(Graphics g) {
@@ -248,12 +257,12 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		if(presets.length != getAllFiles().length){//More presets where saved
 			presets = getAllFiles();
 			remove(presetCB);
-			presetCB = new JComboBox(presets);
+			presetCB = new JComboBox<String>(presets);
 			presetCB.setBounds(height/9 +925, width/20, 100, 50);
 			add(presetCB);
 			presetCB.setVisible(true);}
 
-		
+
 		while(!messages.isEmpty()){
 			messages.printMessage();
 			try {
@@ -262,9 +271,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				e.printStackTrace();
 			}
 		}
-
-
-
 
 		g.setColor(Color.BLACK);
 		if(elasticWalls)g.setColor(Color.green);
@@ -321,7 +327,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						pendingBalls.get(i).draw(g);}
 				}
 
-				
+
 			}
 
 			for(Point v: verteciesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
@@ -404,7 +410,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				//We represent the inAnimates as BALL objects around their centroid. This makes no difference for force calculations.
 				Ball likeABall = new Ball(this, 0, o.getCentroid().x, o.getCentroid().y, 0, 0, -o.getCharge());
 				temp.force.add(CalculateForce(temp, likeABall));
-				
+
 			}
 		}
 
@@ -733,7 +739,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		double distSquare = distanceSquared(ballA, ballB);
 		magnitude /= distSquare;
 
-		if(Math.pow(distSquare, 0.5)<15){
+		if(Math.pow(distSquare, 0.5)<5){
 			magnitude = 0;//This is to get rid of the acceleration bug.
 			//It works in the sense that anyhow, the forces would cancel out when the balls cross.
 		}
@@ -886,7 +892,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				}
 			}
 			final Ball ballInSpace = temp;
-			
+
 			if(ballOrWall){
 				if(addOrEditBoolean) {
 					if(spaceFree){
@@ -910,7 +916,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									hostProgram.framesId.remove("Add Ball");
 									hostProgram.frames.remove(addBallF);
 									pendingBalls.remove(pendingBall);
-									
+
 								}
 							});
 
@@ -922,8 +928,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						} else{hostProgram.getJFrameById("Add Ball").toFront();}
 
 					}
-					else //addOrEditBoolean = true, but spaceFree = false.
-						messages.addMessage("Sorry: Cannot add ball here, space is already occupied by another ball.", messages.CENTER);
+					else { //addOrEditBoolean = true, but spaceFree = false.
+						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", messages.CENTER);
+						// include some time delay
+						messages.clearMessages();
+					}
 				}
 				else{//addOrEditBoolean = false.
 					if(!spaceFree){

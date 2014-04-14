@@ -26,6 +26,11 @@ public class onScreenMessage {
 		if(loc.equals(CENTER))loc = getCenter(str, (int)p.width, (int)p.height);
 		locations.add(loc);
 	}
+	public void clearMessages() {
+		messages.clear();
+		locations.clear();
+	}
+
 	public void printMessage() {
 		Graphics g = p.initialF.getGraphics();
 		g.setFont(f);

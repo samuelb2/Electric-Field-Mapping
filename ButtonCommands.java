@@ -208,7 +208,7 @@ class SaveToFile extends ButtonCommands {
 	void execute(int caseNum) {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
-		Path file = Paths.get("/src/Save Data/" + s.next());
+		Path file = Paths.get("Save Data/" + s.next());
 		try (BufferedWriter out = Files.newBufferedWriter(file, Charset.forName("US-ASCII"))) {
 			out.write(String.valueOf(newD.ballarray.size()) + '\n');
 			for (Ball a : newD.ballarray) {
@@ -236,14 +236,12 @@ class LoadFromFile extends ButtonCommands {
 
 	@Override
 	void execute(int caseNum) {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Please input file name: ");
-		Path file = Paths.get("/src/Save Data/" + s.next());
+		Path file = Paths.get("Save Data/" + newD.presetSelected);
 		try (Scanner in = new Scanner(file);) {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-				newD.ballarray.add(new Ball(newD, in.nextDouble(), (int)in.nextDouble(), (int)in.nextDouble(), 
+				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(), 
 						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();

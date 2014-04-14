@@ -4,7 +4,7 @@ import java.awt.geom.Line2D;
 
 
 public class Ball {
-	private int x, y;
+	private double x, y;
 	public double mySize, mass, dx, dy, charge, acceleration, accelerationD;
 	public boolean hitWall;
 	public initialDisplay d;
@@ -61,8 +61,8 @@ public class Ball {
 		//g.drawLine((int)forceVector.x1, (int)forceVector.y1, (int)forceVector.x2, (int)forceVector.y2);
 		dx+=Math.cos(accelerationD)*acceleration*tickLength/1000;
 		dy+=Math.sin(accelerationD)*acceleration*tickLength/1000;
-		x = (int) (x+dx*tickLength/1000);
-		y = (int) (y+dy*tickLength/1000);
+		x = (x+dx*tickLength/1000);
+		y = (y+dy*tickLength/1000);
 	}
 
 	public void updateAcceleration() {
@@ -121,17 +121,17 @@ public class Ball {
 		return Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
-	public int getX() {
+	public double getX() {
 		return x;
 	}
-	public void setX(int x) {
-		this.x = x;
+	public void setX(double e) {
+		this.x = e;
 	}
 	public Color getColor() {
 		return color;
@@ -156,7 +156,7 @@ public class Ball {
 		this.mySize = d;
 	}
 	public String toString() {
-		return x + " " + y + " " + mySize + " " + mass + " " + charge;
+		return mass + " " + x + " " + y + " " + dx + " " + dy + " " + charge;
 	}
 
 }
