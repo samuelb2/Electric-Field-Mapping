@@ -59,13 +59,8 @@ public class inanimateObject {
 		for(int i = 0; i < shape.npoints; i++) {
 			Point current = new Point(shape.xpoints[i], shape.ypoints[i]);
 			Point next;
-<<<<<<< HEAD
 			if (i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0]);}
 			else {next = new Point(shape.xpoints[i+1], shape.ypoints[i+1]);}
-=======
-			if (i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0];}
-			else {next = new Point(shape.xpoints[i+1], shape.ypoints[i+1];}
->>>>>>> FETCH_HEAD
 			areaSigma += (current.x*next.y - next.x*current.y);
 		}
 		double finalArea = areaSigma/2;
@@ -76,13 +71,8 @@ public class inanimateObject {
 		for(int i = 0; i < shape.npoints; i++) {
 			Point current =  new Point(shape.xpoints[i], shape.ypoints[i]);
 			Point next;
-<<<<<<< HEAD
 			if (i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0]);}
 			else {next = new Point(shape.xpoints[i+1], shape.ypoints[i+1]);}
-=======
-			if (i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0];}
-			else {next = vertices.get(i+1);}
->>>>>>> FETCH_HEAD
 			xCoordSigma += ((current.x + next.x)*(current.x*next.y - next.x*current.y));
 		}
 		double finalXCoord = (1/(6*finalArea))*xCoordSigma;
@@ -90,17 +80,10 @@ public class inanimateObject {
 		//y:
 		double yCoordSigma = 0;
 		for(int i = 0; i < shape.npoints; i++) {
-<<<<<<< HEAD
 			Point current =  new Point(shape.xpoints[i], shape.ypoints[i]);
 			Point next;
 			if (i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0]);}
 			else {next = new Point(shape.xpoints[i+1], shape.ypoints[i+1]);}
-=======
-			Point current = vertices.get(i);
-			Point next;
-			if(i+1 >= shape.npoints){next = new Point(shape.xpoints[0], shape.ypoints[0];}
-			else {next = new Point(shape.xpoints[i+1], shape.ypoints[i+1];}
->>>>>>> FETCH_HEAD
 			yCoordSigma += ((current.y+next.y)*(current.x*next.y-next.x*current.y));
 		}
 		double finalYCoord = (1/(6*finalArea))*yCoordSigma;

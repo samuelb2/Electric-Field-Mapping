@@ -853,7 +853,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 			if (ballOrWall) {
 				if (addOrEditBoolean) {
 					if (spaceFree) {
-<<<<<<< HEAD
 						if(hostProgram.getJFrameById("Add Ball")==null){
 							final boolean ballsWhereMoving;
 							
@@ -904,7 +903,6 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 
 						} else{hostProgram.getJFrameById("Add Ball").toFront();}
-=======
 						ballarray.add(new Ball(this, .00015, a.getX(), a.getY(), 0, 0, 0));
 						/*if (hostProgram.getJFrameById("Add Ball") == null){
 							final boolean ballsWhereMoving;
@@ -933,17 +931,10 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							addBallF.add(addBallD);
 
 						} else {hostProgram.getJFrameById("Add Ball").toFront();}*/
->>>>>>> FETCH_HEAD
 					}
 					else { //addOrEditBoolean = true, but spaceFree = false.
 						messages.addMessage("Cannot add ball here, space is already occupied by another ball.", 
 								messages.CENTER);
-<<<<<<< HEAD
-						
-=======
-						// include some time delay
-						messages.clearMessages();
->>>>>>> FETCH_HEAD
 					}
 				}
 				else {//addOrEditBoolean = false.
