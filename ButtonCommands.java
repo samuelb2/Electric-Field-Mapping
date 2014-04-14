@@ -17,7 +17,7 @@ public abstract class ButtonCommands {
 		this.d = d;
 	}
 
-	abstract void execute(int caseNum) throws IOException;
+	abstract void execute(int caseNum);
 }
 
 class pauseBallMovement extends ButtonCommands {
@@ -106,32 +106,35 @@ class toogleElasticWalls extends ButtonCommands{
 class addBallCommand extends ButtonCommands {
 
 	private final JFrame callingFrame;
-	private final initialDisplay d;
-	private final double size;
-	private final double X;
-	private final double Y;
-	private final double xspeed;
-	private final double yspeed;
-	private final double charge;
-	private final int pendingBallArraySizeBeforeAddingOurBall;
+	private final initialDisplay newD = (initialDisplay) d;
+	private final addBallDisplay d2;
+	private double mass;
+	private int X;
+	private int Y;
+	private double xspeed;
+	private double yspeed;
+	private double charge;
 
-	addBallCommand(JFrame callingFrame, initialDisplay d, double size, double X, double Y, double xspeed, double yspeed, double charge, int pendingBallArraySize) {
+
+	addBallCommand(JFrame callingFrame, Display d, addBallDisplay d2) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
 		this.callingFrame = callingFrame;
-		this.d = d;
-		this.size = size;
-		this.X = X;
-		this.Y = Y;
-		this.xspeed = xspeed;
-		this.yspeed = yspeed;
-		this.charge = charge;
-		this.pendingBallArraySizeBeforeAddingOurBall = pendingBallArraySize;
+		
+		this.d2 = d2;
+		
 	}
 
 	@Override
 	void execute(int caseNum) {
-		d.toAdd.add(new Ball(d, size, X, Y, xspeed, yspeed, charge));
+		System.out.println("HI");
+		this.mass = d2.getMass();
+		this.X = d2.getX();
+		this.Y = d2.getY();
+		this.xspeed = d2.getDX();
+		this.yspeed = d2.getDY();
+		this.charge = d2.getCharge();
+		newD.toAdd.add(new Ball(newD, mass, X, Y, xspeed, yspeed, charge));
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
 	}
 }
@@ -182,6 +185,13 @@ class updateBallCommand extends ButtonCommands{
 	void execute(int caseNum) {
 		b.setColor(Ball.defualtColor);
 		newD.ballarray.set(ballIndex, b);
+		if(b.mass==0){
+			int index = newD.ballarray.indexOf(b);
+			newD.ballarray.remove(index);
+			newD.remove(newD.chargeDisplay.get(index));
+			newD.chargeDisplay.remove(index);
+			System.out.println("dd");
+		}
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
 
 	}
@@ -195,7 +205,7 @@ class SaveToFile extends ButtonCommands {
 	}
 
 	@Override
-	void execute(int caseNum) throws IOException {
+	void execute(int caseNum) {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
 		Path file = Paths.get("/src/Save Data/" + s.next());
@@ -225,7 +235,7 @@ class LoadFromFile extends ButtonCommands {
 	}
 
 	@Override
-	void execute(int caseNum) throws IOException {
+	void execute(int caseNum) {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Please input file name: ");
 		Path file = Paths.get("/src/Save Data/" + s.next());
@@ -233,7 +243,7 @@ class LoadFromFile extends ButtonCommands {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextDouble(), in.nextDouble(), 
+				newD.ballarray.add(new Ball(newD, in.nextDouble(), (int)in.nextDouble(), (int)in.nextDouble(), 
 						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();

@@ -4,7 +4,8 @@ import java.awt.geom.Line2D;
 
 
 public class Ball {
-	public double x, y, mySize, mass, dx, dy, charge, acceleration, accelerationD;
+	private int x, y;
+	public double mySize, mass, dx, dy, charge, acceleration, accelerationD;
 	public boolean hitWall;
 	public initialDisplay d;
 	private Color color = Color.GREEN;
@@ -13,7 +14,7 @@ public class Ball {
 	public Force force = new Force();
 	Line2D.Double forceVector;
 
-	public Ball (initialDisplay d, double mass, double X, double Y, double dx, double dy, double charge) {
+	public Ball (initialDisplay d, double mass, int X, int Y, double dx, double dy, double charge) {
 		this.d = d;
 		mySize = Math.pow(400000*mass, 0.5)*2;
 		x = X;
@@ -36,6 +37,12 @@ public class Ball {
 	public double getXSpeed() {
 		return dx;
 	}
+	public void setXSpeed(double d){
+		this.dx = d;
+	}
+	public void setYSpeed(double d){
+		this.dy = d;
+	}
 	public double getYSpeed() {
 		return dy;
 	}
@@ -54,8 +61,8 @@ public class Ball {
 		//g.drawLine((int)forceVector.x1, (int)forceVector.y1, (int)forceVector.x2, (int)forceVector.y2);
 		dx+=Math.cos(accelerationD)*acceleration*tickLength/1000;
 		dy+=Math.sin(accelerationD)*acceleration*tickLength/1000;
-		x = x+dx*tickLength/1000;
-		y = y+dy*tickLength/1000;
+		x = (int) (x+dx*tickLength/1000);
+		y = (int) (y+dy*tickLength/1000);
 	}
 
 	public void updateAcceleration() {
@@ -114,16 +121,16 @@ public class Ball {
 		return Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
 	}
 
-	public double getY() {
+	public int getY() {
 		return y;
 	}
-	public void setY(double y) {
+	public void setY(int y) {
 		this.y = y;
 	}
-	public double getX() {
+	public int getX() {
 		return x;
 	}
-	public void setX(double x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 	public Color getColor() {
@@ -131,6 +138,15 @@ public class Ball {
 	}
 	public void setColor(Color c) {
 		this.color = c;
+	}
+	public double getMass(){
+		return mass;
+	}
+	public double getCharge(){
+		return charge;
+	}
+	public void setCharge(double d){
+		this.charge = d;
 	}
 	public void setMass(double m){
 		this.mass = m;

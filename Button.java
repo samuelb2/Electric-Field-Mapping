@@ -14,15 +14,16 @@ import javax.swing.JButton;
 		String[] strs; //Contains the strings that will be displayed on the button
 		//with every click.
 
-		Button(ButtonCommands command, String[]strs, int x, int y, int w, int h) {
+		Button(ButtonCommands command, String[] strs, int x, int y, int w, int h) {
 			super(strs[0]);
-			
+			System.out.println("Creating button: " + strs[0]);
 			
 			addActionListener(this);
 			this.command = command;
 			roundLength = strs.length;
 			this.strs = strs;
 			this.setBounds(x, y, w, h);
+			System.out.println(this.getBounds());
 			
 			
 			this.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -59,11 +60,9 @@ import javax.swing.JButton;
 				
 				this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), newSize));
 			}
-			try {
+			
 				command.execute(timesClicked);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 			timesClicked++;	
 		}
 
