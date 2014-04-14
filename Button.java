@@ -60,7 +60,10 @@ import javax.swing.JButton;
 				
 				this.setFont(new Font(this.getFont().getName(), this.getFont().getStyle(), newSize));
 			}
+<<<<<<< HEAD
 			
+=======
+>>>>>>> FETCH_HEAD
 			command.execute(timesClicked);
 			timesClicked++;
 		}
