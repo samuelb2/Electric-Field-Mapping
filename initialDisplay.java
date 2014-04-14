@@ -37,9 +37,7 @@ import javax.swing.SwingWorker;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-
 public class initialDisplay extends Display implements MouseListener, MouseMotionListener {
-
 	public onScreenMessage messages;
 	public final double k = 8.987551787368176*Math.pow(10, 9);
 	public final double permitivity_of_free_space = 8.85418782 * Math.pow(10, -12);
@@ -242,13 +240,14 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	private String[] getAllFiles() {
 		File directory = new File("Save Data");
 		File[] files = directory.listFiles();
-		String[] filenames = new String[files.length];
-		if (files.length == 0)
-			return new String[] {""};
-		for (int i = 0; i < files.length; i++) {
-			filenames[i] = files[i].getName();
+		if (files != null && files.length != 0) {
+			String[] filenames = new String[files.length];
+			for (int i = 0; i < files.length; i++) {
+				filenames[i] = files[i].getName();
+			}
+			return filenames;
 		}
-		return filenames;
+		return new String[] {""};
 	}
 
 	public void paintComponent(Graphics g) {
@@ -430,7 +429,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public void calcVoltage(){
 		if(timeCounter%50==0){
 			//calculateElectricFieldOnScreen();
-			calculateVolateOnScreen();
+			calculateVoltageOnScreen();
 			//printVoltages();
 		}
 		/*
@@ -642,7 +641,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		}
 	}
 
-	private void calculateVolateOnScreen() {
+	private void calculateVoltageOnScreen() {
 		for(int x = width/6 +5; x < width*5/6-10; x+=pixel) {
 			for (int y = height/6+5; y <height*5/6 + height/10-30; y+=pixel) {
 				voltageValue[x][y] = 0;

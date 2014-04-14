@@ -276,12 +276,12 @@ class addInanimateCommand extends ButtonCommands{
 	private final ArrayList<Point> v;
 	private final JFrame callingFrame;
 
-	addInanimateCommand(initialDisplay d, JFrame callingFrame, Program host, double charge, ArrayList<Point> vertecies) {
+	addInanimateCommand(initialDisplay d, JFrame callingFrame, Program host, double charge, ArrayList<Point> vertices) {
 		super(d);
 		this.d = d;
 		this.p = host;
 		this.charge = charge;
-		this.v = vertecies;
+		this.v = vertices;
 		this.callingFrame = callingFrame;
 	}
 
