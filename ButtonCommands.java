@@ -208,9 +208,9 @@ class SaveToFile extends ButtonCommands {
 			out.write("drawVoltage: " + newD.drawVoltage + '\n');
 			out.write("drawBalls: " + newD.drawBalls + '\n');
 			out.write("elasticWalls: " + newD.elasticWalls + '\n');
-		} catch (IOException x) {
-			System.err.format("IOException: %s%n", x);
-			newD.messages.addMessage("File not found.", onScreenMessage.CENTER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
