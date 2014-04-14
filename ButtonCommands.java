@@ -104,35 +104,34 @@ class toogleElasticWalls extends ButtonCommands{
 }
 
 class addBallCommand extends ButtonCommands {
+
 	private final JFrame callingFrame;
-	private final initialDisplay newD = (initialDisplay) d;
-	private final addBallDisplay d2;
-	private double mass;
-	private int X;
-	private int Y;
-	private double xspeed;
-	private double yspeed;
-	private double charge;
-
-
-	addBallCommand(JFrame callingFrame, Display d, addBallDisplay d2) {
+	private final initialDisplay d;
+	private final double mass;
+	private final double X;
+	private final double Y;
+	private final double xspeed;
+	private final double yspeed;
+	private final double charge;
+	private final int pendingBallArraySizeBeforeAddingOurBall;
+	
+	addBallCommand(JFrame callingFrame, initialDisplay d, double mass, double X, double Y, double xspeed, double yspeed, double charge, int pendingBallArraySize) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
 		this.callingFrame = callingFrame;
-
-		this.d2 = d2;
+		this.d = d;
+		this.mass = mass;
+		this.X = X;
+		this.Y = Y;
+		this.xspeed = xspeed;
+		this.yspeed = yspeed;
+		this.charge = charge;
+		this.pendingBallArraySizeBeforeAddingOurBall = pendingBallArraySize;
 	}
 
 	@Override
 	void execute(int caseNum) {
-		//System.out.println("HI");
-		this.mass = d2.getMass();
-		this.X = d2.getX();
-		this.Y = d2.getY();
-		this.xspeed = d2.getDX();
-		this.yspeed = d2.getDY();
-		this.charge = d2.getCharge();
-		newD.toAdd.add(new Ball(newD, mass, X, Y, xspeed, yspeed, charge));
+		d.toAdd.add(new Ball(d, mass, (int)X, (int)Y, xspeed, yspeed, charge));
 		callingFrame.dispatchEvent(new WindowEvent(callingFrame, WindowEvent.WINDOW_CLOSING));
 	}
 }
@@ -159,7 +158,7 @@ class addOrEditCommand extends ButtonCommands{
 	}
 }
 
-class updateBallCommand extends ButtonCommands{
+class updateBallCommand extends ButtonCommands {
 	private final JFrame callingFrame;
 	private final initialDisplay newD = (initialDisplay) d;
 	private final Ball b;
@@ -230,11 +229,7 @@ class LoadFromFile extends ButtonCommands {
 			int n = in.nextInt();
 			newD.ballarray.clear();
 			for (int i = 0; i < n; i++) {
-<<<<<<< HEAD
-				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(), 
-=======
 				newD.ballarray.add(new Ball(newD, in.nextDouble(), in.nextInt(), in.nextInt(),
->>>>>>> FETCH_HEAD
 						in.nextDouble(), in.nextDouble(), in.nextDouble()));
 			}
 			in.next();
@@ -280,12 +275,12 @@ class addInanimateCommand extends ButtonCommands{
 	private final ArrayList<Point> v;
 	private final JFrame callingFrame;
 
-	addInanimateCommand(initialDisplay d, JFrame callingFrame, Program host, double charge, ArrayList<Point> vertecies) {
+	addInanimateCommand(initialDisplay d, JFrame callingFrame, Program host, double charge, ArrayList<Point> vertices) {
 		super(d);
 		this.d = d;
 		this.p = host;
 		this.charge = charge;
-		this.v = vertecies;
+		this.v = vertices;
 		this.callingFrame = callingFrame;
 	}
 

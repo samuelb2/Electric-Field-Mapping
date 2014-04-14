@@ -4,16 +4,14 @@
 
 import java.awt.Color;
 
-
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-public class Program {
 
+public class Program {
 	ArrayList<JFrame> frames = new ArrayList<JFrame>();
 	ArrayList<String> framesId = new ArrayList<String>();
 
@@ -27,23 +25,24 @@ public class Program {
 	final int yOffSet = xOffSet;
 
 	Program() { initialF.setSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	initialF.setLayout(null);
-	initialF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	initialF.setTitle("Particles in Electric Field Simulator");
-	initialF.getContentPane().setBackground(new Color(96,96,96));
+		initialF.setLayout(null);
+		initialF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initialF.setTitle("Particles in Electric Field Simulator");
+		initialF.getContentPane().setBackground(new Color(96,96,96));
 
-	Display initialD = createDisplay(xOffSet, yOffSet, DISPLAY_WIDTH - (2*xOffSet),
+		Display initialD = createDisplay(xOffSet, yOffSet, DISPLAY_WIDTH - (2*xOffSet),
 			DISPLAY_HEIGHT - (2*yOffSet), initialF, this);
 
-	initialF.add(initialD);
-	initialF.setVisible(true);
-	initialF.setResizable(false);
+		initialF.add(initialD);
+		initialF.setVisible(true);
+		initialF.setResizable(false);
 	}
 
 	public Display createDisplay(int x, int y, int w, int h, JFrame f, Program p) {
 		//Not using x and y offsets for now.
 		return new initialDisplay(w, h, f, p);
 	}
+
 	public void createJFrame(double percentageOfScreenWidth, double percentageOfScreenHeight,
 			String title, Color background, Boolean resizable, final String id){
 
@@ -66,6 +65,7 @@ public class Program {
 		frames.add(retVal);
 
 	}
+
 	public JFrame getJFrameById(String id) {
 		int i = framesId.indexOf(id);
 
@@ -74,6 +74,7 @@ public class Program {
 		}
 		return null;
 	}
+
 	public void closeAllFrames(){//Closes all frames except initialF
 		for(JFrame f : frames){
 			f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
