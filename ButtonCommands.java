@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
 
@@ -84,22 +85,41 @@ class VoltageOnOff extends ButtonCommands{
 }
 
 class toogleElasticWalls extends ButtonCommands{
-	initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
-	toogleElasticWalls(initialDisplay d) {
+	private final initialDisplay newD = (initialDisplay) d;// Done to get access to stuff in initialDisplay and not just Display
+	private final Program hostProgram;
+	toogleElasticWalls(initialDisplay d, Program p) {
 		super(d); //Useless in this place, cuz we are using an initialDisplay.
 		//Only kept here if we need to use in future.
+		this.hostProgram = p;
 	}
 
 	@Override
 	void execute(int caseNum) {
-		switch(caseNum%2){
-		case 0:
-			newD.elasticWalls = false;
-			break;
-		case 1:
-			newD.elasticWalls = true;
-			break;
-		}
+		if(hostProgram.getJFrameById("Change Elasticity")==null) {
+			final boolean ballsWhereMoving;
+
+			if (newD.ballsMoving) {newD.getBallStart().simulateClick();ballsWhereMoving =true;}//Always pause.
+			else ballsWhereMoving = false;
+
+			hostProgram.createJFrame(50, 25, "Change Elasticity", new Color(255,153,0), false, "Change Elasticity");
+
+			final JFrame changeElasticityF = hostProgram.getJFrameById("Change Elasticity");
+			changeElasticityF.addWindowListener(new java.awt.event.WindowAdapter() {
+				@Override
+				public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+					if (ballsWhereMoving){
+						if(!newD.ballsMoving)newD.getBallStart().simulateClick();
+					}
+					hostProgram.framesId.remove("Change Elasticity");
+					hostProgram.frames.remove(changeElasticityF);
+					
+				}});
+
+			Display changeElasticityD = new elasticDisplay(changeElasticityF.getWidth(), changeElasticityF.getHeight(), changeElasticityF, hostProgram, newD);
+			changeElasticityF.add(changeElasticityD);
+
+
+		} else {hostProgram.getJFrameById("Change Elasticity").toFront();}
 	}
 }
 

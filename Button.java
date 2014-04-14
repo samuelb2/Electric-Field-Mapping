@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class Button extends JButton implements ActionListener {
+public class Button extends JButton implements ActionListener, Cloneable{
 	public int timesClicked = 0;
 	public int roundLength; //How many times button must be clicked to return to original
 	//position.
@@ -59,5 +59,15 @@ public class Button extends JButton implements ActionListener {
 
 	public void simulateClick() {
 		actionPerformed(new ActionEvent(this, 0, ""));
+	}
+	
+	public Button getClone(){
+		try {
+			return (Button) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

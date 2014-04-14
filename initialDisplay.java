@@ -53,6 +53,8 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	//Balls are in here only while they are being created using creation window.
 	public ArrayList<Point> verticesOfBeingAddedInAnimate;//Temp representation of vertecies of being added inanimate
 	public ArrayList<inanimateObject> inAnimates;
+	
+	
 
 	public String[] presets;
 	private JComboBox<String> presetCB;
@@ -68,7 +70,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	private Button ballStart;
 	private Button reset;
-	private Button elasticWallsButton;
+	public Button elasticWallsButton;//Must be public so other classes can edit its text when elasticity changes.
 	private Button Voltage;
 	private Button addOrEdit;
 	private Button saveToFile;
@@ -96,6 +98,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	boolean drawVoltage;
 	boolean drawBalls;
 	boolean elasticWalls;
+	public int elasticity;
 	boolean addOrEditBoolean;//Add - true, Edit - false.
 	boolean ballOrWall; //Ball - true, Wall - false.
 
@@ -121,17 +124,18 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		paintloop = true;
 
 		String[] startStrs = {"Start", "Pause"};
-		ballStart = new Button( new pauseBallMovement(this), startStrs, height/9 +75, width/20, 100, 50);
-		add(ballStart);
-		ballStart.setVisible(true);
+		ballStart = (new Button( new pauseBallMovement(this), startStrs, height/9 +75, width/20, 100, 50));
+		add(getBallStart());
+		getBallStart().setVisible(true);
 
 		String[] resetStrs = {"Reset"};
 		reset = new Button (new Reset(this), resetStrs, height/9 +225, width/20, 100, 50);
 		add(reset);
 		reset.setVisible(true);
 
-		String[] elasticWallsArray = {"Elastic: On", "Elastic: Off"};
-		elasticWallsButton = new Button(new toogleElasticWalls(this), elasticWallsArray,height/9 +325, width/20, 100, 50);
+		this.elasticity = 50;
+		String[] elasticWallsArray = {"Elasticity: " + this.elasticity + "%"};
+		elasticWallsButton = new Button(new toogleElasticWalls(this, hostProgram), elasticWallsArray,height/9 +325, width/20, 100, 50);
 		add(elasticWallsButton);
 		elasticWallsButton.setVisible(true);
 
@@ -271,7 +275,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		}
 
 		g.setColor(Color.BLACK);
-		if(elasticWalls)g.setColor(Color.green);
+		if(elasticWalls)g.setColor(new Color(0,Math.min(255*elasticity/100, 255),0));
 
 		g.drawRect(width/6, height/6, width*2/3, height*5/6 - height/10);
 		g.setColor(Color.BLACK);
@@ -386,6 +390,15 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	public void togglePaintLoop() {
 		paintloop = !paintloop;
 	}
+
+	/**
+	 * @return the ballStartButton
+	 */
+	public Button getBallStart() {
+		return ballStart;
+	}
+
+
 
 	public void ballMovement(Graphics g) {
 		for(int k = 0; k <ballarray.size(); k++) {
@@ -867,7 +880,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						if(hostProgram.getJFrameById("Add Ball")==null){
 							final boolean ballsWhereMoving;
 
-							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							if(ballsMoving) {getBallStart().simulateClick();ballsWhereMoving =true;}//Always pause.
 							else ballsWhereMoving = false;
 									hostProgram.createJFrame(50, 25, "Add Ball", new Color(255,153,0), false, "Add Ball");
 
@@ -877,7 +890,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 									    @Override
 									    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 									    	if(ballsWhereMoving){
-									    		if(!ballsMoving)ballStart.simulateClick();
+									    		if(!ballsMoving)getBallStart().simulateClick();
 									    	}
 									    	hostProgram.framesId.remove("Add Ball");
 									    	hostProgram.frames.remove(addBallF);
@@ -913,20 +926,23 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 
 
+						} else{
+							hostProgram.getJFrameById("Add Ball").toFront();
 						}
+					}
 
 
 					else { //addOrEditBoolean = true, but spaceFree = false.
 						messages.addMessage("Cannot add ball here, space is already occupied by another ball.",
-								messages.CENTER);}
-					}
+								onScreenMessage.CENTER);}
+					
 				}
 				else {//addOrEditBoolean = false.
 					if(!spaceFree) {
 						if(hostProgram.getJFrameById("Edit Ball")==null) {
 							final boolean ballsWhereMoving;
 
-							if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							if (ballsMoving) {getBallStart().simulateClick();ballsWhereMoving =true;}//Always pause.
 							else ballsWhereMoving = false;
 
 							hostProgram.createJFrame(50, 50, "Edit Ball", new Color(255,153,0), false, "Edit Ball");
@@ -936,7 +952,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 								@Override
 								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 									if (ballsWhereMoving){
-										if(!ballsMoving)ballStart.simulateClick();
+										if(!ballsMoving)getBallStart().simulateClick();
 									}
 									hostProgram.framesId.remove("Edit Ball");
 									hostProgram.frames.remove(editBallF);
@@ -956,7 +972,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				if (hostProgram.getJFrameById("Add Inanimate") == null) {
 					final boolean ballsWhereMoving;
 
-					if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving = true;}//Always pause.
+					if (ballsMoving) {getBallStart().simulateClick();ballsWhereMoving = true;}//Always pause.
 					else ballsWhereMoving = false;
 
 					hostProgram.createJFrame(50, 25, "Add Inanimate", new Color(255,153,0), false, "Add Inanimate");
@@ -966,7 +982,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 						@Override
 						public void windowClosing (java.awt.event.WindowEvent windowEvent) {
 							if (ballsWhereMoving && !ballsMoving) {
-								ballStart.simulateClick();
+								getBallStart().simulateClick();
 							}
 							hostProgram.framesId.remove("Add Inanimate");
 							hostProgram.frames.remove(editBallF);

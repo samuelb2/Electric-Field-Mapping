@@ -83,20 +83,19 @@ public class Ball {
 		 */
 
 		if (x+radius >= width*5/6) {
-			if(d.elasticWalls)dx*=-1;else if(dx>0)dx = 0;//If walls are inelastic, and ball is trying
-														 //to move right.
+			if(dx>0)dx = -dx *d.elasticity/100;//If walls are inelastic, and ball is trying to move right.
 			hitWall = true;
 		}
 		if (x-radius <= width/6 + 3) {
-			if(d.elasticWalls)dx*=-1;else if(dx<0)dx=0;//If ball is trying to move left.
+			if(dx<0)dx = -dx * d.elasticity/100;//If ball is trying to move left.
 			hitWall = true;
 		}
 		if (y+radius >= height*9/10) {
-			if(d.elasticWalls)dy*=-1;else if(dy>0)dy=0;//If ball is trying to move down.
+			if(dy>0)dy = -dy * d.elasticity/100;//If ball is trying to move down.
 			hitWall = true;
 		}
 		if (y-radius <= height/6 + 3) {
-			if(d.elasticWalls)dy*=-1;else if(dy<0)dy=0;//If ball is trying to move up.
+			if(dy<0)dy = -dy *d.elasticity/100;//If ball is trying to move up.
 			hitWall = true;
 		}
 
