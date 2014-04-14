@@ -10,7 +10,7 @@ public class inanimateObject {
 	private final initialDisplay d;
 
 	private double charge;
-	private Polygon shape;
+	public Polygon shape;
 	//private final ArrayList<Point> vertices;
 	/*
 	 * Note: Vertices MUST be in circular order! E.g. for the following:

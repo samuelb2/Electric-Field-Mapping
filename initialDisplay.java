@@ -51,7 +51,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 	//ability to add. Must be public so that other classes can add to this (such as the popup).
 	public ArrayList<Ball> pendingBalls;//Used to display where you are adding a ball
 	//Balls are in here only while they are being created using creation window.
-	public ArrayList<Point> verteciesOfBeingAddedInAnimate;//Temp representation of vertecies of being added inanimate
+	public ArrayList<Point> verticesOfBeingAddedInAnimate;//Temp representation of vertecies of being added inanimate
 	public ArrayList<inanimateObject> inAnimates;
 
 	public String[] presets;
@@ -167,7 +167,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		presetCB.setVisible(true);
 
 		inAnimates = new ArrayList<inanimateObject>();
-		verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
+		verticesOfBeingAddedInAnimate = new ArrayList<Point>();
 		toAdd = new LinkedList<Ball>();
 		ballarray = new ArrayList<Ball>();
 		pendingBalls = new ArrayList<Ball>();
@@ -325,7 +325,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 				}
 			}
 
-			for(Point v: verteciesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
+			for(Point v: verticesOfBeingAddedInAnimate){//Draw temp circles when adding an inanimate.
 				g.setColor(new Color(255, 111, 0));
 				g.fillOval(v.x, v.y, 5, 5);
 			}
@@ -741,9 +741,9 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 		else if(xComp == 0) {
 			if(yComp == 0) {
 				return 00;
-			}else if (yComp > 0) {
+			} else if (yComp > 0) {
 				return Math.PI/2;
-			}else if(yComp < 0) {
+			} else if(yComp < 0) {
 				return 3*Math.PI/2;
 			}
 		}
@@ -764,6 +764,17 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 
 	public void setPaintLoop(boolean value) {
 		paintloop = value;
+	}
+	
+	public boolean isAnimate(Point p) {
+		// for now
+		// assumes that animate objects are not inside inanimate ones
+		// assumes that an object is located at that point
+		for (inanimateObject a : inAnimates) {
+			if (a.shape.contains(p))
+				return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -902,7 +913,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							
 
 
-						} else{hostProgram.getJFrameById("Add Ball").toFront();}
+						} else {hostProgram.getJFrameById("Add Ball").toFront();}
 						ballarray.add(new Ball(this, .00015, a.getX(), a.getY(), 0, 0, 0));
 						/*if (hostProgram.getJFrameById("Add Ball") == null){
 							final boolean ballsWhereMoving;
@@ -938,11 +949,11 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 					}
 				}
 				else {//addOrEditBoolean = false.
-					if(!spaceFree){
-						if(hostProgram.getJFrameById("Edit Ball")==null){
+					if(!spaceFree) {
+						if(hostProgram.getJFrameById("Edit Ball")==null) {
 							final boolean ballsWhereMoving;
 
-							if(ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
+							if (ballsMoving) {ballStart.simulateClick();ballsWhereMoving =true;}//Always pause.
 							else ballsWhereMoving = false;
 
 							hostProgram.createJFrame(50, 50, "Edit Ball", new Color(255,153,0), false, "Edit Ball");
@@ -951,7 +962,7 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							editBallF.addWindowListener(new java.awt.event.WindowAdapter() {
 								@Override
 								public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-									if(ballsWhereMoving){
+									if (ballsWhereMoving){
 										if(!ballsMoving)ballStart.simulateClick();
 									}
 									hostProgram.framesId.remove("Edit Ball");
@@ -986,21 +997,21 @@ public class initialDisplay extends Display implements MouseListener, MouseMotio
 							}
 							hostProgram.framesId.remove("Add Inanimate");
 							hostProgram.frames.remove(editBallF);
-							verteciesOfBeingAddedInAnimate = new ArrayList<Point>();
+							verticesOfBeingAddedInAnimate = new ArrayList<Point>();
 						}
 					});
 
 					Display editBallD = new addInanimateDisplay(editBallF.getWidth(), editBallF.getHeight(), 
 							editBallF, hostProgram, this);
 					editBallF.add(editBallD);
-					verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+					verticesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
 
 				} else {
 					//hostProgram.getJFrameById("Edit Ball").toFront();
 					//In this case we don't bring to front, because it will always be up when we click
 					//to add more vertecies and we don't want user to keep jumping between windows.
 
-					verteciesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
+					verticesOfBeingAddedInAnimate.add(new Point(a.getX(), a.getY()));
 				}
 			}
 		}
