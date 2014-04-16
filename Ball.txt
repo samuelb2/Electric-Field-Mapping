@@ -1,0 +1,11 @@
+8: Use a more descriptive variable name
+12: Not code related at all but default is misspelled.  Also, this value never changes so it should be moved to a constants file with the rest of the constants
+50: Pretty simple but add a comment so you can quickly reference what it's doing
+61: Delete this line
+62-63: Add spaces to make it more readable.  Also, if you look at this code in 3 months, you won't remember what accelerationD is.  Rename these variables that end with letters or numbers to what their purpose is.  Also, add parenthesis to these equations.  Some processors will not handle order of operations correctly and will result in you getting the wrong result
+68/72: Write a comment describing when these are called, will save a ton of time while debugging
+78-117: This should be moved to a separate class to handle Physics calculations.  Have that class run on another thread (not the main thread).  This will help a lot.  First of all, the code will be much easier to read.  Second of all if it is on a separate thread, the interface and animation will not be blocked when the calculations are happening.  This will make it seem much more responsive (especially when voltage is enabled).
+81-83: Good that you commented this, now make it into a single line comment.  No need to waste 3 lines on it
+102-104: You know what I'm going to say (single line comment will make it easier to read)
+32-48/119-156: Group all these getter and setter methods together
+152: Good commenting

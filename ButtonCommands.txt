@@ -1,0 +1,1 @@
+Overall: I would recommend splitting each class into a separate file then grouping those in a folder.  Right now, none of this code is too complicated; however, if you ever add more complicated code it will get very hard to find thing.  Splitting it out could potentially cause a bit longer startup (very small meaning milliseconds difference).

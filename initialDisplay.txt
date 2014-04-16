@@ -1,0 +1,24 @@
+Ok, let's get started :)
+First remove the following imports:
+java.awt.event.ActionEvent
+java.awt.event.ActionListener
+javax.swing.JButton
+javax.swing.JComponent
+javax.swing.SwingWorker
+
+They aren't actually used
+
+Another overall hint: This has the potential to suck up A TON of memory.  Find out how much memory is free to ensure you don't use to much memory.  See http://stackoverflow.com/questions/25552/using-java-to-get-os-level-system-information.
+
+
+114: Split everything in this method out to other methods to make it easier to read and easier to find things
+202-219: Definitely move this to it's own method
+315: If you move this to it's own thread, your performance will be much better.  The easiest way to do this is using the Runnable class (http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html)
+321: I don't think drawBalls can ever be false
+332: This is a good safety, but try to prevent null from ever being in an array
+464: Add a debug constant in your app.  Uncomment this line and check if the app is in debug mode.  If it is, print it.  This will save you a ton of time when things break.  Read this about log levels: http://stackoverflow.com/questions/5817738/how-to-use-log-levels-in-java
+499: This most likely isn't super high priority.  Ensure that it isn't called every time the calculations are updated
+575: Try chunking this instead of calculating every pixel.  Calculate as if there are num_of_pixels/100 then set every 100 pixels to the same color.  This wont look as good but will be much faster.  You can then check how long this is taking with a timer and then slowly make the boxes smaller until it takes x amount of time to render.  Look at my comment about like 315 and try moving this to another thread.
+657: Consider moving this to a separate thread
+701: See my previous comments
+915-935: This comment is amazing

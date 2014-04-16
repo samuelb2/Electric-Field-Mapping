@@ -1,0 +1,8 @@
+18: Use a more descriptive variable name
+20-21: Not used anywhere but 22-23.  Save the memory and don't declare them as variables.  Honestly, it's not too big of a memory difference but over time small optimizations like this will add up and speed up your application.
+22-23: Move the declaration of all constants to their own file.
+27: Move the first line of code onto it's own line.  That's more of a personal preference but will make the code much easier to read
+28: I don't believe this line is necessary
+41: Instead of w, h, write out width and height
+51: While this is semi-self-explanatory, write a comment describing it so you can quickly analyze what it is doing
+55: Move this line after you have added all the listeners.  Theoretically the user could close the window before the listener could be added which would cause a memory-leak

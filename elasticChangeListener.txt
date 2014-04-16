@@ -1,0 +1,2 @@
+15-18: This whole block can be simplified to "((JSlider)(changeEvent.getSource())).getValue()"
+20: Seems very hackey, I would eventually change this because it could eventually stop working.

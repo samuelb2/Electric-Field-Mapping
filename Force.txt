@@ -1,0 +1,1 @@
+24-63: Consider moving this to a physics class that runs calculations on a separate thread

@@ -1,0 +1,1 @@
+29-121: I recommend calculating the x and y values based on the distance from each other rather than hardcoding it.  If you need to add a new element eventually, it will be a pain to change all the values

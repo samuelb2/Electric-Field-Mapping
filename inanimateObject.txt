@@ -1,0 +1,1 @@
+48-94: Consider moving this to a calculations class on a separate thread
